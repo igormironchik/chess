@@ -138,6 +138,12 @@ Pawn::moves() const
 	return m_moves;
 }
 
+Pawn::FigureType
+Pawn::type() const
+{
+	return PawnFigure;
+}
+
 const Pawn::Moves Pawn::m_moves = {
 	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
 	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
@@ -179,6 +185,12 @@ Castle::moves() const
 	return m_moves;
 }
 
+Castle::FigureType
+Castle::type() const
+{
+	return CastleFigure;
+}
+
 const Castle::Moves Castle::m_moves = {
 	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
 	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
@@ -218,6 +230,12 @@ const Knight::Moves &
 Knight::moves() const
 {
 	return m_moves;
+}
+
+Knight::FigureType
+Knight::type() const
+{
+	return KnightFigure;
 }
 
 const Knight::Moves Knight::m_moves = {
@@ -262,6 +280,12 @@ Bishop::moves() const
 	return m_moves;
 }
 
+Bishop::FigureType
+Bishop::type() const
+{
+	return BishopFigure;
+}
+
 const Bishop::Moves Bishop::m_moves = {
 	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
 	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
@@ -301,6 +325,12 @@ const Queen::Moves &
 Queen::moves() const
 {
 	return m_moves;
+}
+
+Queen::FigureType
+Queen::type() const
+{
+	return QueenFigure;
 }
 
 const Queen::Moves Queen::m_moves = {
@@ -345,6 +375,12 @@ const King::Moves &
 King::moves() const
 {
 	return m_moves;
+}
+
+King::FigureType
+King::type() const
+{
+	return KingFigure;
 }
 
 const King::Moves King::m_moves = {

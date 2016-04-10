@@ -81,6 +81,15 @@ public:
 		Black
 	}; // enum Color
 
+	enum FigureType {
+		KingFigure,
+		QueenFigure,
+		CastleFigure,
+		KnightFigure,
+		BishopFigure,
+		PawnFigure
+	}; // enum FigureType
+
 	Figure( int xv, int yv, Color c, const QString & name );
 	virtual ~Figure();
 
@@ -89,6 +98,9 @@ public:
 
 	//! \return Possible moves.
 	virtual const Moves & moves() const = 0;
+
+	//! \return Type of figure.
+	virtual FigureType type() const = 0;
 
 	//! \return X.
 	int x() const;
@@ -140,6 +152,9 @@ public:
 	//! \return Possible moves.
 	const Moves & moves() const;
 
+	//! \return Type of figure.
+	FigureType type() const;
+
 private:
 	static const Moves m_moves;
 }; // class Pawn
@@ -159,6 +174,9 @@ public:
 
 	//! \return Possible moves.
 	const Moves & moves() const;
+
+	//! \return Type of figure.
+	FigureType type() const;
 
 private:
 	static const Moves m_moves;
@@ -180,6 +198,9 @@ public:
 	//! \return Possible moves.
 	const Moves & moves() const;
 
+	//! \return Type of figure.
+	FigureType type() const;
+
 private:
 	static const Moves m_moves;
 }; // class Knight
@@ -199,6 +220,9 @@ public:
 
 	//! \return Possible moves.
 	const Moves & moves() const;
+
+	//! \return Type of figure.
+	FigureType type() const;
 
 private:
 	static const Moves m_moves;
@@ -220,6 +244,9 @@ public:
 	//! \return Possible moves.
 	const Moves & moves() const;
 
+	//! \return Type of figure.
+	FigureType type() const;
+
 private:
 	static const Moves m_moves;
 }; // class Queen
@@ -239,6 +266,9 @@ public:
 
 	//! \return Possible moves.
 	const Moves & moves() const;
+
+	//! \return Type of figure.
+	FigureType type() const;
 
 private:
 	static const Moves m_moves;

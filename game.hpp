@@ -74,6 +74,9 @@ private:
 	//! Mark cell for hit.
 	void markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 		Figure * figure );
+	//! Move figure.
+	void moveFigure( Figure * figure, int x, int y,
+		int oldX, int oldY );
 
 private:
 	//! Board.
