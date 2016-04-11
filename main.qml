@@ -53,6 +53,7 @@ Window {
             anchors.horizontalCenter: rect.horizontalCenter
             y: board.y + board.height
             font.bold: true
+            font.pixelSize: 14
 
             text: "White"
         }

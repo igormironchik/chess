@@ -46,6 +46,8 @@ Rectangle {
                 text: modelData
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                font.pixelSize: 14
             }
         }
         Item { width: offset; height: offset; }
@@ -63,6 +65,8 @@ Rectangle {
                 text: 8 - index
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                font.pixelSize: 14
            }
         }
     }
@@ -107,6 +111,8 @@ Rectangle {
                 text: 8 - index
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                font.pixelSize: 14
            }
         }
     }
@@ -126,6 +132,8 @@ Rectangle {
                 text: modelData
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                font.pixelSize: 14
             }
         }
         Item { width: offset; height: offset; }
