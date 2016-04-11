@@ -36,7 +36,7 @@ Rectangle {
         id: top
         height: offset
 
-        // top letters
+        // Top letters.
         Item { width: offset; height: offset; }
         Repeater {
             model: [ "A", "B", "C", "D", "E", "F", "G", "H" ]
@@ -56,6 +56,7 @@ Rectangle {
     Column {
         y: top.y + top.height
 
+        // Left letters.
         Repeater {
             model: 8
 
@@ -79,6 +80,7 @@ Rectangle {
         y: top.y + top.height
         objectName: "grid"
 
+        // Chess board.
         Repeater {
             model: chessBoard
 
@@ -102,6 +104,7 @@ Rectangle {
         y: grid.y
         x: grid.x + grid.width
 
+        // Right numbers.
         Repeater {
             model: 8
 
@@ -122,7 +125,7 @@ Rectangle {
         height: offset
         y: grid.y + grid.height
 
-        // top letters
+        // Bottom letters.
         Item { width: offset; height: offset; }
         Repeater {
             model: [ "A", "B", "C", "D", "E", "F", "G", "H" ]
