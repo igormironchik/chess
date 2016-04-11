@@ -23,20 +23,27 @@
 // Qt include.
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 // Chess include.
 #include "game.hpp"
+#include "board.hpp"
 
 int main( int argc, char ** argv )
 {
 	QGuiApplication app( argc, argv );
-	QQmlApplicationEngine engine( QUrl( "qrc:/main.qml" ) );
+	QQmlApplicationEngine engine;
+	Chess::Board board;
+
+	engine.rootContext()->setContextProperty( "chessBoard", &board );
+
+	engine.load( QUrl( "qrc:/main.qml" ) );
 
 	if( engine.rootObjects().isEmpty() )
 		return -1;
 
 	try {
-		Chess::Game game( engine.rootObjects().first() );
+		Chess::Game game( engine.rootObjects().first(), board );
 
 		return app.exec();
 	}

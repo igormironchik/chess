@@ -49,8 +49,9 @@ Error::~Error() noexcept
 // Game
 //
 
-Game::Game( QObject * root )
-	:	m_root( root )
+Game::Game( QObject * root, Board & board )
+	:	m_board( board )
+	,	m_root( root )
 	,	m_boardObject( 0 )
 	,	m_turnColor( Figure::White )
 	,	m_selected( 0 )
@@ -93,11 +94,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 		{
 			if( !m_board.figures()[ y ][ x ] )
 			{
-				QObject * cell = m_boardObject->findChild< QObject* > (
-					cellName( x, y ) );
-
-				if( cell )
-					QMetaObject::invokeMethod( cell, "markBlue" );
+				m_board.markBlue( x, y );
 
 				m_possibleMoves.append( x * 10 + y );
 			}
@@ -119,11 +116,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 	{
 		if( !m_board.figures()[ y ][ x ] )
 		{
-			QObject * cell = m_boardObject->findChild< QObject* > (
-				cellName( x, y ) );
-
-			if( cell )
-				QMetaObject::invokeMethod( cell, "markBlue" );
+			m_board.markBlue( x, y );
 
 			m_possibleMoves.append( x * 10 + y );
 		}
@@ -145,11 +138,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 			{
 				if( figure->color() != m_board.figures()[ y ][ x ]->color() )
 				{
-					QObject * cell = m_boardObject->findChild< QObject* > (
-						cellName( x, y ) );
-
-					if( cell )
-						QMetaObject::invokeMethod( cell, "markRed" );
+					m_board.markRed( x, y );
 
 					m_possibleMoves.append( x * 10 + y );
 				}
@@ -166,11 +155,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 		if( m_board.figures()[ y ][ x ] &&
 			figure->color() != m_board.figures()[ y ][ x ]->color() )
 		{
-			QObject * cell = m_boardObject->findChild< QObject* > (
-				cellName( x, y ) );
-
-			if( cell )
-				QMetaObject::invokeMethod( cell, "markRed" );
+			m_board.markRed( x, y );
 
 			m_possibleMoves.append( x * 10 + y );
 		}
@@ -178,9 +163,15 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 }
 
 void
+Game::clearCellsColor()
+{
+	m_board.clearBlueRed();
+}
+
+void
 Game::clicked( int x, int y )
 {
-	QMetaObject::invokeMethod( m_boardObject, "clearColor" );
+	clearCellsColor();
 
 	if( !m_selected )
 	{
@@ -194,80 +185,66 @@ Game::clicked( int x, int y )
 				m_selectedX = x;
 				m_selectedY = y;
 
-				QObject * cell = m_boardObject->findChild< QObject* > (
-					cellName( x, y ) );
+				m_board.markBlue( x, y );
 
-				if( cell )
+				const Figure::Moves moves = figure->moves();
+
+				for( int i = 0; i < 5; ++i )
 				{
-					QMetaObject::invokeMethod( cell, "markBlue" );
-
-					const Figure::Moves moves = figure->moves();
-
-					for( int i = 0; i < 5; ++i )
+					for( int j = 0; j < 5; ++j )
 					{
-						for( int j = 0; j < 5; ++j )
+						int dx = 0;
+						int dy = 0;
+
+						if( figure->color() == Figure::White )
 						{
-							int dx = 0;
-							int dy = 0;
+							dx = j - 2;
+							dy = i - 2;
+						}
+						else
+						{
+							dx = 2 - j;
+							dy = 2 - i;
+						}
 
-							if( figure->color() == Figure::White )
+						// Moves highlight.
+						if( moves[ i ][ j ].types().testFlag( Move::Movement ) )
+						{
+							markCellsForMove( x, y, dx, dy,
+								moves[ i ][ j ].dist(), figure );
+						}
+
+						// Castling highlight.
+						if( figure->type() == Figure::KingFigure &&
+							!figure->isFirstMoveDone() )
+						{
+							if( !m_board.figures()[ y ][ x - 1 ] &&
+								!m_board.figures()[ y ][ x - 2 ] &&
+								!m_board.figures()[ y ][ x - 3 ] &&
+								m_board.figures()[ y ][ x - 4 ] &&
+								!m_board.figures()[ y ][ x - 4 ]->isFirstMoveDone() )
 							{
-								dx = j - 2;
-								dy = i - 2;
-							}
-							else
-							{
-								dx = 2 - j;
-								dy = 2 - i;
-							}
+								m_possibleMoves.append( ( x - 3 ) * 10 + y );
 
-							// Moves highlight.
-							if( moves[ i ][ j ].types().testFlag( Move::Movement ) )
-							{
-								markCellsForMove( x, y, dx, dy,
-									moves[ i ][ j ].dist(), figure );
-							}
-
-							// Castling highlight.
-							if( figure->type() == Figure::KingFigure &&
-								!figure->isFirstMoveDone() )
-							{
-								if( !m_board.figures()[ y ][ x - 1 ] &&
-									!m_board.figures()[ y ][ x - 2 ] &&
-									!m_board.figures()[ y ][ x - 3 ] &&
-									m_board.figures()[ y ][ x - 4 ] &&
-									!m_board.figures()[ y ][ x - 4 ]->isFirstMoveDone() )
-								{
-									m_possibleMoves.append( ( x - 3 ) * 10 + y );
-
-									QObject * cell = m_boardObject->findChild< QObject* > (
-										cellName( x - 3, y ) );
-
-									if( cell )
-										QMetaObject::invokeMethod( cell, "markBlue" );
-								}
-
-								if( !m_board.figures()[ y ][ x + 1 ] &&
-									!m_board.figures()[ y ][ x + 2 ] &&
-									m_board.figures()[ y ][ x + 3 ] &&
-									!m_board.figures()[ y ][ x + 3 ]->isFirstMoveDone() )
-								{
-									m_possibleMoves.append( ( x + 2 ) * 10 + y );
-
-									QObject * cell = m_boardObject->findChild< QObject* > (
-										cellName( x + 2, y ) );
-
-									if( cell )
-										QMetaObject::invokeMethod( cell, "markBlue" );
-								}
+								m_board.markBlue( x - 3, y );
 							}
 
-							// Hit highlight.
-							if( moves[ i ][ j ].types().testFlag( Move::Hit ) )
+							if( !m_board.figures()[ y ][ x + 1 ] &&
+								!m_board.figures()[ y ][ x + 2 ] &&
+								m_board.figures()[ y ][ x + 3 ] &&
+								!m_board.figures()[ y ][ x + 3 ]->isFirstMoveDone() )
 							{
-								markCellForHit( x, y, dx, dy,
-									moves[ i ][ j ].dist(), figure );
+								m_possibleMoves.append( ( x + 2 ) * 10 + y );
+
+								m_board.markBlue( x + 2, y );
 							}
+						}
+
+						// Hit highlight.
+						if( moves[ i ][ j ].types().testFlag( Move::Hit ) )
+						{
+							markCellForHit( x, y, dx, dy,
+								moves[ i ][ j ].dist(), figure );
 						}
 					}
 				}
@@ -278,17 +255,7 @@ Game::clicked( int x, int y )
 	{
 		if( m_possibleMoves.contains( x * 10 + y ) )
 		{
-			if( m_board.figures()[ y ][ x ] )
-			{
-				QObject * hitted = m_boardObject->findChild< QObject* >
-					( m_board.figures()[ y ][ x ]->name() );
-
-				if( hitted )
-					hitted->setProperty( "visible", false );
-			}
-
-			moveFigure( m_selected, x, y,
-				m_selectedX, m_selectedY );
+			m_board.move( m_selectedX, m_selectedY, x, y );
 
 			// Castling.
 			if( m_selected->type() == Figure::KingFigure &&
@@ -299,22 +266,18 @@ Game::clicked( int x, int y )
 					case Figure::White :
 					{
 						if( x == 1 )
-							moveFigure( m_board.figures()[ 7 ][ 0 ], 2, 7,
-								0, 7 );
+							m_board.move( 0, 7, 2, 7 );
 						else if( x == 6 )
-							moveFigure( m_board.figures()[ 7 ][ 7 ], 5, 7,
-								7, 7 );
+							m_board.move( 7, 7, 5, 7 );
 					}
 						break;
 
 					case Figure::Black :
 					{
 						if( x == 1 )
-							moveFigure( m_board.figures()[ 0 ][ 0 ], 2, 0,
-								0, 0 );
+							m_board.move( 0, 0, 2, 0 );
 						else if( x == 6 )
-							moveFigure( m_board.figures()[ 0 ][ 7 ], 5, 0,
-								0, 7 );
+							m_board.move( 7, 0, 5, 0 );
 					}
 						break;
 
@@ -350,26 +313,6 @@ Game::clicked( int x, int y )
 
 		m_selected = 0;
 	}
-}
-
-void
-Game::moveFigure( Figure * figure, int x, int y,
-	int oldX, int oldY )
-{
-	QObject * figureObject = m_boardObject->findChild< QObject* >
-		( figure->name() );
-
-	QObject * cell = m_boardObject->findChild< QObject* >
-		( cellName( x, y ) );
-
-	if( figureObject && cell )
-	{
-		figureObject->setProperty( "x", cell->property( "x" ) );
-		figureObject->setProperty( "y", cell->property( "y" ) );
-	}
-
-	m_board.figures()[ oldY ][ oldX ] = 0;
-	m_board.figures()[ y ][ x ] = figure;
 }
 
 void

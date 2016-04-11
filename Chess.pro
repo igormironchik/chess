@@ -6,7 +6,6 @@ CONFIG += c++14
 
 OTHER_FILES =	Board.qml \
 				Cell.qml \
-				Figure.qml \
 				main.qml
 				
 SOURCES =	main.cpp \

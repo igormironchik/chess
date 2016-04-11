@@ -20,6 +20,9 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef CHESS__GAME_HPP__INCLUDED
+#define CHESS__GAME_HPP__INCLUDED
+
 // Qt include.
 #include <QObject>
 #include <QVector>
@@ -58,7 +61,7 @@ class Game final
 	Q_OBJECT
 
 public:
-	explicit Game( QObject * root );
+	Game( QObject * root, Board & board );
 	~Game();
 
 private slots:
@@ -74,13 +77,12 @@ private:
 	//! Mark cell for hit.
 	void markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 		Figure * figure );
-	//! Move figure.
-	void moveFigure( Figure * figure, int x, int y,
-		int oldX, int oldY );
+	//! Clear cells color.
+	void clearCellsColor();
 
 private:
 	//! Board.
-	Board m_board;
+	Board & m_board;
 	//! Root object in QML.
 	QObject * m_root;
 	//! Board object in QML.
@@ -98,3 +100,5 @@ private:
 }; // class Game
 
 } /* namespace Chess */
+
+#endif // CHESS__GAME_HPP__INCLUDED

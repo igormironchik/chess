@@ -20,6 +20,9 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef CHESS__FIGURES_HPP__INCLUDED
+#define CHESS__FIGURES_HPP__INCLUDED
+
 // Qt include.
 #include <QFlags>
 #include <QString>
@@ -277,3 +280,5 @@ private:
 } /* namespace Chess */
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( Chess::Move::Types )
+
+#endif // CHESS__FIGURES_HPP__INCLUDED

@@ -26,24 +26,13 @@ Item {
     id: cell
 
     property alias cellColor: rectangle.color
+    property alias blueProp: blue.visible
+    property alias redProp: red.visible
     property int chessX
     property int chessY
 
     signal clicked( int x, int y )
     signal hovered( int x, int y )
-
-    function clearColor() {
-        blue.visible = false
-        red.visible = false
-    }
-
-    function markBlue() {
-        blue.visible = true
-    }
-
-    function markRed() {
-        red.visible = true
-    }
 
     Rectangle {
         id: rectangle
@@ -62,6 +51,18 @@ Item {
         visible: false
         anchors.fill: parent
         color: "#88FF0000"
+    }
+
+    property alias source: image.source
+
+    Image {
+        width: parent.width - 5
+        height: parent.height - 5
+        id: image
+        anchors.centerIn: parent
+        fillMode: Image.PreserveAspectFit
+        horizontalAlignment: Image.AlignHCenter
+        verticalAlignment: Image.AlignVCenter
     }
 
     MouseArea {

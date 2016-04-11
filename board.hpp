@@ -20,12 +20,16 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef CHESS__BOARD_HPP__INCLUDED
+#define CHESS__BOARD_HPP__INCLUDED
+
 // Chess include.
 #include "figures.hpp"
 
 // Qt include.
 #include <QList>
 #include <QSharedPointer>
+#include <QAbstractListModel>
 
 namespace Chess {
 
@@ -35,10 +39,19 @@ namespace Chess {
 //
 
 //! Board.
-class Board final {
+class Board final
+	:	public QAbstractListModel
+{
 public:
 	Board();
 	~Board();
+
+	enum RoleNames {
+		CellImageSourceRole = Qt::UserRole,
+		CurrentPieceColorRole = CellImageSourceRole + 1,
+		BluePieceColorRole = CurrentPieceColorRole + 1,
+		RedPieceColorRole = BluePieceColorRole + 1
+	}; // enum RoleNames
 
 	//! Figures on board.
 	typedef Figure* FiguresOnBoard[ 8 ][ 8 ];
@@ -49,11 +62,42 @@ public:
 	//! New game.
 	void newGame();
 
+	//! Make move.
+	void move( int fromX, int fromY, int toX, int toY );
+
+	//! Mark blue.
+	void markBlue( int x, int y );
+	//! Mark red.
+	void markRed( int x, int y );
+	//! Clear blue|red.
+	void clearBlueRed();
+
+	int rowCount( const QModelIndex & parent = QModelIndex() ) const
+		Q_DECL_OVERRIDE;
+	QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const
+		Q_DECL_OVERRIDE;
+	QHash< int, QByteArray > roleNames() const Q_DECL_OVERRIDE;
+
+
 private:
 	//! Board.
 	FiguresOnBoard m_board;
 	//! Figures.
 	static const QList< QSharedPointer< Figure > > m_figures;
+
+	enum Color {
+		Blue,
+		Red,
+		None
+	}; // enum Color
+
+	//! Figures on board.
+	typedef Color Colors[ 8 ][ 8 ];
+
+	//! Cells' marks.
+	Colors m_colors;
 }; // class Board
 
 } /* namespace Chess */
+
+#endif // CHESS__BOARD_HPP__INCLUDED
