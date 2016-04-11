@@ -73,12 +73,6 @@ Game::~Game()
 {
 }
 
-static inline QString cellName( int x, int y )
-{
-	return QString( "c" ) + QString::number( x ) +
-		QString::number( y );
-}
-
 void
 Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 	Figure * figure )
