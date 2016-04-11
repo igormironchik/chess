@@ -24,18 +24,15 @@ import QtQuick 2.5
 
 Rectangle {
     id: rect
-    width: 50
-    height: 50
     color: "transparent"
 
     property alias source: image.source
 
     Image {
-        width: 45
-        height: 45
+        width: parent.width - 5
+        height: parent.height - 5
         id: image
-        anchors.horizontalCenter: rect.horizontalCenter
-        anchors.verticalCenter: rect.verticalCenter
+        anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
         horizontalAlignment: Image.AlignHCenter
         verticalAlignment: Image.AlignVCenter

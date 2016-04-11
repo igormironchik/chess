@@ -25,9 +25,6 @@ import QtQuick 2.0
 Item {
     id: cell
 
-    width: 50
-    height: 50
-
     property alias cellColor: rectangle.color
     property int chessX
     property int chessY

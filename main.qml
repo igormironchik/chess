@@ -27,8 +27,10 @@ Window {
     id: appWindow
     visible: true
 
-    width: 16 * 2 + 50 * 8
-    height: 16 * 2 + 50 * 8
+    property int minSize: 16 * 2 + 50 * 8
+
+    width: minSize
+    height: minSize
 
     Rectangle {
         id: rect
@@ -36,8 +38,9 @@ Window {
 
         Board {
             id: board
-            anchors.horizontalCenter: rect.horizontalCenter
-            anchors.verticalCenter: rect.verticalCenter
+            anchors.centerIn: rect
+            width: Math.max( Math.min( parent.width, parent.height ), minSize )
+            height: Math.max( Math.min( parent.width, parent.height ), minSize )
 
             objectName: "board"
         }

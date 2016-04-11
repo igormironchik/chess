@@ -24,12 +24,10 @@ import QtQuick 2.0
 
 Rectangle {
     property int offset: 16
-    property int cellWidth: 50
-    property int cellHeight: 50
+    property int cellWidth: ( width - offset * 2 ) / 8
+    property int cellHeight: ( height - offset * 2 ) / 8
 
     id: board
-    width: cellWidth * 8 + offset * 2
-    height: cellWidth * 8 + offset * 2
 
     signal clicked( int x, int y )
     signal hovered( int x, int y )
@@ -112,329 +110,457 @@ Rectangle {
         cellColor: "white"; chessX: 0; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c00" }
+        objectName: "c00";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c10; x: offset + cellWidth; y: offset;
         cellColor: "lightgray"; chessX: 1; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c10" }
+        objectName: "c10";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c20; x: offset + cellWidth * 2; y: offset;
         cellColor: "white"; chessX: 2; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c20" }
+        objectName: "c20";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c30; x: offset + cellWidth * 3; y: offset;
         cellColor: "lightgray"; chessX: 3; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c30" }
+        objectName: "c30";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c40; x: offset + cellWidth * 4; y: offset;
         cellColor: "white"; chessX: 4; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c40" }
+        objectName: "c40";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c50; x: offset + cellWidth * 5; y: offset;
         cellColor: "lightgray"; chessX: 5; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c50" }
+        objectName: "c50";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c60; x: offset + cellWidth * 6; y: offset;
         cellColor: "white"; chessX: 6; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c60" }
+        objectName: "c60";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c70; x: offset + cellWidth * 7; y: offset;
         cellColor: "lightgray"; chessX: 7; chessY: 0;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c70" }
+        objectName: "c70";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c01; x: offset; y: offset + cellHeight;
         cellColor: "lightgray"; chessX: 0; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c01" }
+        objectName: "c01";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c11; x: offset + cellWidth; y: offset + cellHeight;
         cellColor: "white"; chessX: 1; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c11" }
+        objectName: "c11";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c21; x: offset + cellWidth * 2; y: offset + cellHeight;
         cellColor: "lightgray"; chessX: 2; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c21" }
+        objectName: "c21";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c31; x: offset + cellWidth * 3; y: offset + cellHeight;
         cellColor: "white"; chessX: 3; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c31" }
+        objectName: "c31";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c41; x: offset + cellWidth * 4; y: offset + cellHeight;
         cellColor: "lightgray"; chessX: 4; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c41" }
+        objectName: "c41";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c51; x: offset + cellWidth * 5; y: offset + cellHeight;
         cellColor: "white"; chessX: 5; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c51" }
+        objectName: "c51";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c61; x: offset + cellWidth * 6; y: offset + cellHeight;
         cellColor: "lightgray"; chessX: 6; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c61" }
+        objectName: "c61";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c71; x: offset + cellWidth * 7; y: offset + cellHeight;
         cellColor: "white"; chessX: 7; chessY: 1;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c71" }
+        objectName: "c71";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c02; x: offset; y: offset + cellHeight * 2;
         cellColor: "white"; chessX: 0; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c02" }
+        objectName: "c02";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c12; x: offset + cellWidth; y: offset + cellHeight * 2;
         cellColor: "lightgray"; chessX: 1; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c12" }
+        objectName: "c12";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c22; x: offset + cellWidth * 2; y: offset + cellHeight * 2;
         cellColor: "white"; chessX: 2; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c22" }
+        objectName: "c22";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c32; x: offset + cellWidth * 3; y: offset + cellHeight * 2;
         cellColor: "lightgray"; chessX: 3; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c32" }
+        objectName: "c32";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c42; x: offset + cellWidth * 4; y: offset + cellHeight * 2;
         cellColor: "white"; chessX: 4; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c42" }
+        objectName: "c42";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c52; x: offset + cellWidth * 5; y: offset + cellHeight * 2;
         cellColor: "lightgray"; chessX: 5; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c52" }
+        objectName: "c52";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c62; x: offset + cellWidth * 6; y: offset + cellHeight * 2;
         cellColor: "white"; chessX: 6; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c62" }
+        objectName: "c62";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c72; x: offset + cellWidth * 7; y: offset + cellHeight * 2;
         cellColor: "lightgray"; chessX: 7; chessY: 2;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c72" }
+        objectName: "c72";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c03; x: offset; y: offset + cellHeight * 3;
         cellColor: "lightgray"; chessX: 0; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c03" }
+        objectName: "c03";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c13; x: offset + cellWidth; y: offset + cellHeight * 3;
         cellColor: "white"; chessX: 1; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c13" }
+        objectName: "c13";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c23; x: offset + cellWidth * 2; y: offset + cellHeight * 3;
         cellColor: "lightgray"; chessX: 2; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c23" }
+        objectName: "c23";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c33; x: offset + cellWidth * 3; y: offset + cellHeight * 3;
         cellColor: "white"; chessX: 3; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c33" }
+        objectName: "c33";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c43; x: offset + cellWidth * 4; y: offset + cellHeight * 3;
         cellColor: "lightgray"; chessX: 4; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c43" }
+        objectName: "c43";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c53; x: offset + cellWidth * 5; y: offset + cellHeight * 3;
         cellColor: "white"; chessX: 5; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c53" }
+        objectName: "c53";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c63; x: offset + cellWidth * 6; y: offset + cellHeight * 3;
         cellColor: "lightgray"; chessX: 6; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c63" }
+        objectName: "c63";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c73; x: offset + cellWidth * 7; y: offset + cellHeight * 3;
         cellColor: "white"; chessX: 7; chessY: 3;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c73" }
+        objectName: "c73";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c04; x: offset; y: offset + cellHeight * 4;
         cellColor: "white"; chessX: 0; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c04" }
+        objectName: "c04";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c14; x: offset + cellWidth; y: offset + cellHeight * 4;
         cellColor: "lightgray"; chessX: 1; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c14" }
+        objectName: "c14";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c24; x: offset + cellWidth * 2; y: offset + cellHeight * 4;
         cellColor: "white"; chessX: 2; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c24" }
+        objectName: "c24";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c34; x: offset + cellWidth * 3; y: offset + cellHeight * 4;
         cellColor: "lightgray"; chessX: 3; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c34" }
+        objectName: "c34";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c44; x: offset + cellWidth * 4; y: offset + cellHeight * 4;
         cellColor: "white"; chessX: 4; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c44" }
+        objectName: "c44";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c54; x: offset + cellWidth * 5; y: offset + cellHeight * 4;
         cellColor: "lightgray"; chessX: 5; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c54" }
+        objectName: "c54";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c64; x: offset + cellWidth * 6; y: offset + cellHeight * 4;
         cellColor: "white"; chessX: 6; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c64" }
+        objectName: "c64";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c74; x: offset + cellWidth * 7; y: offset + cellHeight * 4;
         cellColor: "lightgray"; chessX: 7; chessY: 4;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c74" }
+        objectName: "c74";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c05; x: offset; y: offset + cellHeight * 5;
         cellColor: "lightgray"; chessX: 0; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c05" }
+        objectName: "c05";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c15; x: offset + cellWidth; y: offset + cellHeight * 5;
         cellColor: "white"; chessX: 1; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c15" }
+        objectName: "c15";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c25; x: offset + cellWidth * 2; y: offset + cellHeight * 5;
         cellColor: "lightgray"; chessX: 2; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c25" }
+        objectName: "c25";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c35; x: offset + cellWidth * 3; y: offset + cellHeight * 5;
         cellColor: "white"; chessX: 3; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c35" }
+        objectName: "c35";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c45; x: offset + cellWidth * 4; y: offset + cellHeight * 5;
         cellColor: "lightgray"; chessX: 4; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c45" }
+        objectName: "c45";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c55; x: offset + cellWidth * 5; y: offset + cellHeight * 5;
         cellColor: "white"; chessX: 5; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c55" }
+        objectName: "c55";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c65; x: offset + cellWidth * 6; y: offset + cellHeight * 5;
         cellColor: "lightgray"; chessX: 6; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c65" }
+        objectName: "c65";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c75; x: offset + cellWidth * 7; y: offset + cellHeight * 5;
         cellColor: "white"; chessX: 7; chessY: 5;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c75" }
+        objectName: "c75";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c06; x: offset; y: offset + cellHeight * 6;
         cellColor: "white"; chessX: 0; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c06" }
+        objectName: "c06";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c16; x: offset + cellWidth; y: offset + cellHeight * 6;
         cellColor: "lightgray"; chessX: 1; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c16" }
+        objectName: "c16";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c26; x: offset + cellWidth * 2; y: offset + cellHeight * 6;
         cellColor: "white"; chessX: 2; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c26" }
+        objectName: "c26";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c36; x: offset + cellWidth * 3; y: offset + cellHeight * 6;
         cellColor: "lightgray"; chessX: 3; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c36" }
+        objectName: "c36";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c46; x: offset + cellWidth * 4; y: offset + cellHeight * 6;
         cellColor: "white"; chessX: 4; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c46" }
+        objectName: "c46";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c56; x: offset + cellWidth * 5; y: offset + cellHeight * 6;
         cellColor: "lightgray"; chessX: 5; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c56" }
+        objectName: "c56";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c66; x: offset + cellWidth * 6; y: offset + cellHeight * 6;
         cellColor: "white"; chessX: 6; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c66" }
+        objectName: "c66";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c76; x: offset + cellWidth * 7; y: offset + cellHeight * 6;
         cellColor: "lightgray"; chessX: 7; chessY: 6;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c76" }
+        objectName: "c76";
+        width: cellWidth;
+        height: cellHeight; }
 
     Cell { id: c07; x: offset; y: offset + cellHeight * 7;
         cellColor: "lightgray"; chessX: 0; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c07" }
+        objectName: "c07";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c17; x: offset + cellWidth; y: offset + cellHeight * 7;
         cellColor: "white"; chessX: 1; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c17" }
+        objectName: "c17";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c27; x: offset + cellWidth * 2; y: offset + cellHeight * 7;
         cellColor: "lightgray"; chessX: 2; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c27" }
+        objectName: "c27";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c37; x: offset + cellWidth * 3; y: offset + cellHeight * 7;
         cellColor: "white"; chessX: 3; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c37" }
+        objectName: "c37";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c47; x: offset + cellWidth * 4; y: offset + cellHeight * 7;
         cellColor: "lightgray"; chessX: 4; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c47" }
+        objectName: "c47";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c57; x: offset + cellWidth * 5; y: offset + cellHeight * 7;
         cellColor: "white"; chessX: 5; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c57" }
+        objectName: "c57";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c67; x: offset + cellWidth * 6; y: offset + cellHeight * 7;
         cellColor: "lightgray"; chessX: 6; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c67" }
+        objectName: "c67";
+        width: cellWidth;
+        height: cellHeight; }
     Cell { id: c77; x: offset + cellWidth * 7; y: offset + cellHeight * 7;
         cellColor: "white"; chessX: 7; chessY: 7;
         onClicked: board.clicked( x, y );
         onHovered: board.hovered( x, y );
-        objectName: "c77" }
+        objectName: "c77";
+        width: cellWidth;
+        height: cellHeight; }
 
     // Left side.
 
@@ -707,6 +833,8 @@ Rectangle {
         x: c06.x
         y: c06.y
         objectName: "pawn-white-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -714,6 +842,8 @@ Rectangle {
         x: c16.x
         y: c16.y
         objectName: "pawn-white-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -721,6 +851,8 @@ Rectangle {
         x: c26.x
         y: c26.y
         objectName: "pawn-white-3"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -728,6 +860,8 @@ Rectangle {
         x: c36.x
         y: c36.y
         objectName: "pawn-white-4"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -735,6 +869,8 @@ Rectangle {
         x: c46.x
         y: c46.y
         objectName: "pawn-white-5"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -742,6 +878,8 @@ Rectangle {
         x: c56.x
         y: c56.y
         objectName: "pawn-white-6"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -749,6 +887,8 @@ Rectangle {
         x: c66.x
         y: c66.y
         objectName: "pawn-white-7"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -756,6 +896,8 @@ Rectangle {
         x: c76.x
         y: c76.y
         objectName: "pawn-white-8"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -763,6 +905,8 @@ Rectangle {
         x: c07.x
         y: c07.y
         objectName: "castle-white-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -770,6 +914,8 @@ Rectangle {
         x: c17.x
         y: c17.y
         objectName: "knight-white-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -777,6 +923,8 @@ Rectangle {
         x: c27.x
         y: c27.y
         objectName: "bishop-white-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -784,6 +932,8 @@ Rectangle {
         x: c37.x
         y: c37.y
         objectName: "queen-white"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -791,6 +941,8 @@ Rectangle {
         x: c47.x
         y: c47.y
         objectName: "king-white"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -798,6 +950,8 @@ Rectangle {
         x: c57.x
         y: c57.y
         objectName: "bishop-white-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -805,6 +959,8 @@ Rectangle {
         x: c67.x
         y: c67.y
         objectName: "knight-white-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -812,6 +968,8 @@ Rectangle {
         x: c77.x
         y: c77.y
         objectName: "castle-white-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     // Black.
@@ -821,6 +979,8 @@ Rectangle {
         x: c01.x
         y: c01.y
         objectName: "pawn-black-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -828,6 +988,8 @@ Rectangle {
         x: c11.x
         y: c11.y
         objectName: "pawn-black-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -835,6 +997,8 @@ Rectangle {
         x: c21.x
         y: c21.y
         objectName: "pawn-black-3"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -842,6 +1006,8 @@ Rectangle {
         x: c31.x
         y: c31.y
         objectName: "pawn-black-4"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -849,6 +1015,8 @@ Rectangle {
         x: c41.x
         y: c41.y
         objectName: "pawn-black-5"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -856,6 +1024,8 @@ Rectangle {
         x: c51.x
         y: c51.y
         objectName: "pawn-black-6"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -863,6 +1033,8 @@ Rectangle {
         x: c61.x
         y: c61.y
         objectName: "pawn-black-7"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -870,6 +1042,8 @@ Rectangle {
         x: c71.x
         y: c71.y
         objectName: "pawn-black-8"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -877,6 +1051,8 @@ Rectangle {
         x: c00.x
         y: c00.y
         objectName: "castle-black-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -884,6 +1060,8 @@ Rectangle {
         x: c10.x
         y: c10.y
         objectName: "knight-black-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -891,6 +1069,8 @@ Rectangle {
         x: c20.x
         y: c20.y
         objectName: "bishop-black-1"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -898,6 +1078,8 @@ Rectangle {
         x: c30.x
         y: c30.y
         objectName: "queen-black"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -905,6 +1087,8 @@ Rectangle {
         x: c40.x
         y: c40.y
         objectName: "king-black"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -912,6 +1096,8 @@ Rectangle {
         x: c50.x
         y: c50.y
         objectName: "bishop-black-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -919,6 +1105,8 @@ Rectangle {
         x: c60.x
         y: c60.y
         objectName: "knight-black-2"
+        width: cellWidth
+        height: cellHeight
     }
 
     Figure {
@@ -926,5 +1114,7 @@ Rectangle {
         x: c70.x
         y: c70.y
         objectName: "castle-black-2"
+        width: cellWidth
+        height: cellHeight
     }
 }
