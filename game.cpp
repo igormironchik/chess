@@ -327,9 +327,25 @@ Game::clicked( int x, int y )
 			m_possibleMoves.clear();
 
 			if( m_turnColor == Figure::White )
+			{
 				m_turnColor = Figure::Black;
+
+				QObject * turn = m_root->findChild< QObject* > (
+					QLatin1String( "turn" ) );
+
+				if( turn )
+					turn->setProperty( "text", QLatin1String( "Black" ) );
+			}
 			else
+			{
 				m_turnColor = Figure::White;
+
+				QObject * turn = m_root->findChild< QObject* > (
+					QLatin1String( "turn" ) );
+
+				if( turn )
+					turn->setProperty( "text", QLatin1String( "White" ) );
+			}
 		}
 
 		m_selected = 0;

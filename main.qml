@@ -27,10 +27,11 @@ Window {
     id: appWindow
     visible: true
 
-    property int minSize: 16 * 2 + 50 * 8
+    property int offset: 16
+    property int minSize: offset * 2 + 50 * 8
 
     width: minSize
-    height: minSize
+    height: minSize + offset
 
     Rectangle {
         id: rect
@@ -38,11 +39,22 @@ Window {
 
         Board {
             id: board
-            anchors.centerIn: rect
-            width: Math.max( Math.min( parent.width, parent.height ), minSize )
-            height: Math.max( Math.min( parent.width, parent.height ), minSize )
+            width: Math.max( Math.min( parent.width, parent.height - offset ), minSize )
+            height: Math.max( Math.min( parent.width, parent.height - offset ), minSize )
+            anchors.horizontalCenter: rect.horizontalCenter
 
             objectName: "board"
+        }
+
+        Text {
+            id: turn
+            objectName: "turn"
+            height: offset
+            anchors.horizontalCenter: rect.horizontalCenter
+            y: board.y + board.height
+            font.bold: true
+
+            text: "White"
         }
     }
 }
