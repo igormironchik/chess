@@ -27,6 +27,9 @@
 #include <QFlags>
 #include <QString>
 
+// C++ include.
+#include <array>
+
 
 namespace Chess {
 
@@ -97,7 +100,7 @@ public:
 	virtual ~Figure();
 
 	//! Moves.
-	typedef Move Moves[ 5 ][ 5 ];
+	using Moves = std::array< std::array< Move, 5 >, 5 >;
 
 	//! \return Possible moves.
 	virtual const Moves & moves() const = 0;

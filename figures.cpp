@@ -145,25 +145,30 @@ Pawn::type() const
 }
 
 const Pawn::Moves Pawn::m_moves = {
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ) },
 
-	{ { Move::Unknown, Move::No }, { Move::Hit, Move::One },
-	{ Move::Movement, Move::TwoFirstTime }, { Move::Hit, Move::One },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
+		Move( Move::Hit, Move::One ),
+		Move( Move::Movement, Move::TwoFirstTime ), Move( Move::Hit, Move::One ),
+		Move( Move::Unknown, Move::No ) },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ) },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ) },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } } };
+	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
+		Move( Move::Unknown, Move::No ) } };
 
 
 //
@@ -192,25 +197,34 @@ Castle::type() const
 }
 
 const Castle::Moves Castle::m_moves = {
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Movement | Move::Hit, Move::Any }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Movement | Move::Hit, Move::Any }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } } };
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } } };
 
 
 //
@@ -239,25 +253,32 @@ Knight::type() const
 }
 
 const Knight::Moves Knight::m_moves = {
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 >{ Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Movement | Move::Hit, Move::One }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Movement | Move::Hit, Move::One } },
+	std::array< Move, 5 > { Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Movement | Move::Hit, Move::One }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Movement | Move::Hit, Move::One } },
+	std::array< Move, 5 > { Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No } } };
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No } } };
 
 
 //
@@ -287,25 +308,33 @@ Bishop::type() const
 }
 
 const Bishop::Moves Bishop::m_moves = {
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 >{ Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 >{ Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } } };
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } } };
 
 
 //
@@ -334,28 +363,33 @@ Queen::type() const
 }
 
 const Queen::Moves Queen::m_moves = {
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 >{ Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No },
-	{ Move::Movement | Move::Hit, Move::Any },
-	{ Move::Movement | Move::Hit, Move::Any },
-	{ Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::Any },
-	{ Move::Movement | Move::Hit, Move::Any },
-	{ Move::Movement | Move::Hit, Move::Any },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Movement | Move::Hit, Move::Any },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } } };
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } } };
 
 
 //
@@ -384,27 +418,32 @@ King::type() const
 }
 
 const King::Moves King::m_moves = {
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No },
-	{ Move::Movement | Move::Hit, Move::One },
-	{ Move::Movement | Move::Hit, Move::One },
-	{ Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Movement | Move::Hit, Move::One },
-	{ Move::Movement | Move::Hit, Move::One },
-	{ Move::Movement | Move::Hit, Move::One },
-	{ Move::Unknown, Move::No } },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Movement | Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No } },
 
-	{ { Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No }, { Move::Unknown, Move::No },
-	{ Move::Unknown, Move::No } } };
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } } };
 
 } /* namespace Chess */
