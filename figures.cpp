@@ -145,30 +145,30 @@ Pawn::type() const
 }
 
 const Pawn::Moves Pawn::m_moves = {
-	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ) },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
-		Move( Move::Hit, Move::One ),
-		Move( Move::Movement, Move::TwoFirstTime ), Move( Move::Hit, Move::One ),
-		Move( Move::Unknown, Move::No ) },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Hit, Move::One },
+		Move{ Move::Movement, Move::TwoFirstTime }, Move{ Move::Hit, Move::One },
+		Move{ Move::Unknown, Move::No } },
 
-	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ) },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ) },
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } },
 
-	std::array< Move, 5 > { Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ), Move( Move::Unknown, Move::No ),
-		Move( Move::Unknown, Move::No ) } };
+	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No }, Move{ Move::Unknown, Move::No },
+		Move{ Move::Unknown, Move::No } } };
 
 
 //
