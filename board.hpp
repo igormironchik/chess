@@ -72,6 +72,11 @@ public:
 	//! Clear blue|red.
 	void clearBlueRed();
 
+	//! \return White king.
+	King * whiteKing() const;
+	//! \return Black king.
+	King * blackKing() const;
+
 	int rowCount( const QModelIndex & parent = QModelIndex() ) const
 		Q_DECL_OVERRIDE;
 	QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const
@@ -84,6 +89,10 @@ private:
 	FiguresOnBoard m_board;
 	//! Figures.
 	static const QList< QSharedPointer< Figure > > m_figures;
+	//! White king.
+	King * m_whiteKing;
+	//! Black king.
+	King * m_blackKing;
 
 	enum Color {
 		Blue,

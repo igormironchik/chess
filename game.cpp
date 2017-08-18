@@ -57,6 +57,7 @@ Game::Game( QObject * root, Board & board )
 	,	m_selected( 0 )
 	,	m_selectedX( 0 )
 	,	m_selectedY( 0 )
+	,	m_isChess( false )
 {
 	m_boardObject = m_root->findChild< QObject* > ( QLatin1String( "board" ) );
 
@@ -163,149 +164,272 @@ Game::clearCellsColor()
 }
 
 void
-Game::clicked( int x, int y )
+Game::firstClick( int x, int y )
 {
-	clearCellsColor();
+	Figure * figure = m_board.figures()[ y ][ x ];
 
-	if( !m_selected )
+	if( figure != 0 )
 	{
-		Figure * figure = m_board.figures()[ y ][ x ];
-
-		if( figure != 0 )
+		if( figure->color() == m_turnColor )
 		{
-			if( figure->color() == m_turnColor )
+			m_selected = figure;
+			m_selectedX = x;
+			m_selectedY = y;
+
+			m_board.markBlue( x, y );
+
+			const Figure::Moves moves = figure->moves();
+
+			for( int i = 0; i < 5; ++i )
 			{
-				m_selected = figure;
-				m_selectedX = x;
-				m_selectedY = y;
-
-				m_board.markBlue( x, y );
-
-				const Figure::Moves moves = figure->moves();
-
-				for( int i = 0; i < 5; ++i )
+				for( int j = 0; j < 5; ++j )
 				{
-					for( int j = 0; j < 5; ++j )
+					int dx = 0;
+					int dy = 0;
+
+					if( figure->color() == Figure::White )
 					{
-						int dx = 0;
-						int dy = 0;
+						dx = j - 2;
+						dy = i - 2;
+					}
+					else
+					{
+						dx = 2 - j;
+						dy = 2 - i;
+					}
 
-						if( figure->color() == Figure::White )
+					// Moves highlight.
+					if( moves[ i ][ j ].types().testFlag( Move::Movement ) )
+					{
+						markCellsForMove( x, y, dx, dy,
+							moves[ i ][ j ].dist(), figure );
+					}
+
+					// Castling highlight.
+					if( figure->type() == Figure::KingFigure &&
+						!figure->isFirstMoveDone() && !m_isChess )
+					{
+						if( !m_board.figures()[ y ][ x - 1 ] &&
+							!m_board.figures()[ y ][ x - 2 ] &&
+							!m_board.figures()[ y ][ x - 3 ] &&
+							m_board.figures()[ y ][ x - 4 ] &&
+							!m_board.figures()[ y ][ x - 4 ]->isFirstMoveDone() )
 						{
-							dx = j - 2;
-							dy = i - 2;
-						}
-						else
-						{
-							dx = 2 - j;
-							dy = 2 - i;
-						}
+							m_possibleMoves.append( ( x - 3 ) * 10 + y );
 
-						// Moves highlight.
-						if( moves[ i ][ j ].types().testFlag( Move::Movement ) )
-						{
-							markCellsForMove( x, y, dx, dy,
-								moves[ i ][ j ].dist(), figure );
-						}
-
-						// Castling highlight.
-						if( figure->type() == Figure::KingFigure &&
-							!figure->isFirstMoveDone() )
-						{
-							if( !m_board.figures()[ y ][ x - 1 ] &&
-								!m_board.figures()[ y ][ x - 2 ] &&
-								!m_board.figures()[ y ][ x - 3 ] &&
-								m_board.figures()[ y ][ x - 4 ] &&
-								!m_board.figures()[ y ][ x - 4 ]->isFirstMoveDone() )
-							{
-								m_possibleMoves.append( ( x - 3 ) * 10 + y );
-
-								m_board.markBlue( x - 3, y );
-							}
-
-							if( !m_board.figures()[ y ][ x + 1 ] &&
-								!m_board.figures()[ y ][ x + 2 ] &&
-								m_board.figures()[ y ][ x + 3 ] &&
-								!m_board.figures()[ y ][ x + 3 ]->isFirstMoveDone() )
-							{
-								m_possibleMoves.append( ( x + 2 ) * 10 + y );
-
-								m_board.markBlue( x + 2, y );
-							}
+							m_board.markBlue( x - 3, y );
 						}
 
-						// Hit highlight.
-						if( moves[ i ][ j ].types().testFlag( Move::Hit ) )
+						if( !m_board.figures()[ y ][ x + 1 ] &&
+							!m_board.figures()[ y ][ x + 2 ] &&
+							m_board.figures()[ y ][ x + 3 ] &&
+							!m_board.figures()[ y ][ x + 3 ]->isFirstMoveDone() )
 						{
-							markCellForHit( x, y, dx, dy,
-								moves[ i ][ j ].dist(), figure );
+							m_possibleMoves.append( ( x + 2 ) * 10 + y );
+
+							m_board.markBlue( x + 2, y );
 						}
+					}
+
+					// Hit highlight.
+					if( moves[ i ][ j ].types().testFlag( Move::Hit ) )
+					{
+						markCellForHit( x, y, dx, dy,
+							moves[ i ][ j ].dist(), figure );
 					}
 				}
 			}
 		}
 	}
-	else
+}
+
+bool
+Game::secondClick( int x, int y )
+{
+	if( m_possibleMoves.contains( x * 10 + y ) )
 	{
-		if( m_possibleMoves.contains( x * 10 + y ) )
-		{
-			m_board.move( m_selectedX, m_selectedY, x, y );
+		m_board.move( m_selectedX, m_selectedY, x, y );
 
-			// Castling.
-			if( m_selected->type() == Figure::KingFigure &&
-				!m_selected->isFirstMoveDone() )
-			{
-				switch( m_selected->color() )
-				{
-					case Figure::White :
-					{
-						if( x == 1 )
-							m_board.move( 0, 7, 2, 7 );
-						else if( x == 6 )
-							m_board.move( 7, 7, 5, 7 );
-					}
-						break;
+		handleCastling( x, y );
 
-					case Figure::Black :
-					{
-						if( x == 1 )
-							m_board.move( 0, 0, 2, 0 );
-						else if( x == 6 )
-							m_board.move( 7, 0, 5, 0 );
-					}
-						break;
+		m_selected->firstMoveDone();
+		m_possibleMoves.clear();
 
-					default :
-						break;
-				}
-			}
+		markTurnLabel();
 
-			m_selected->firstMoveDone();
-			m_possibleMoves.clear();
-
-			if( m_turnColor == Figure::White )
-			{
-				m_turnColor = Figure::Black;
-
-				QObject * turn = m_root->findChild< QObject* > (
-					QLatin1String( "turn" ) );
-
-				if( turn )
-					turn->setProperty( "text", QLatin1String( "Black" ) );
-			}
-			else
-			{
-				m_turnColor = Figure::White;
-
-				QObject * turn = m_root->findChild< QObject* > (
-					QLatin1String( "turn" ) );
-
-				if( turn )
-					turn->setProperty( "text", QLatin1String( "White" ) );
-			}
-		}
+		checkChess();
 
 		m_selected = 0;
+
+		return true;
+	}
+
+	m_selected = 0;
+
+	return false;
+}
+
+void
+Game::markTurnLabel()
+{
+	if( m_turnColor == Figure::White )
+	{
+		m_turnColor = Figure::Black;
+
+		QObject * turn = m_root->findChild< QObject* > (
+			QLatin1String( "turn" ) );
+
+		if( turn )
+			turn->setProperty( "text", QLatin1String( "Black" ) );
+	}
+	else
+	{
+		m_turnColor = Figure::White;
+
+		QObject * turn = m_root->findChild< QObject* > (
+			QLatin1String( "turn" ) );
+
+		if( turn )
+			turn->setProperty( "text", QLatin1String( "White" ) );
+	}
+}
+
+void
+Game::handleCastling( int x, int y )
+{
+	Q_UNUSED( y )
+
+	// Castling.
+	if( m_selected->type() == Figure::KingFigure &&
+		!m_selected->isFirstMoveDone() )
+	{
+		switch( m_selected->color() )
+		{
+			case Figure::White :
+			{
+				if( x == 1 )
+					m_board.move( 0, 7, 2, 7 );
+				else if( x == 6 )
+					m_board.move( 7, 7, 5, 7 );
+			}
+				break;
+
+			case Figure::Black :
+			{
+				if( x == 1 )
+					m_board.move( 0, 0, 2, 0 );
+				else if( x == 6 )
+					m_board.move( 7, 0, 5, 0 );
+			}
+				break;
+
+			default :
+				break;
+		}
+	}
+}
+
+void
+Game::checkChess()
+{
+	King * king = ( m_turnColor == Figure::Black ? m_board.blackKing() :
+		m_board.whiteKing() );
+
+	for( int x = 0; x < 8; ++x )
+	{
+		for( int y = 0; y < 8; ++y )
+		{
+			if( m_board.figures()[ y ][ x ] &&
+				m_board.figures()[ y ][ x ]->color() != m_turnColor )
+					markChess( king, m_board.figures()[ y ][ x ] );
+		}
+	}
+}
+
+void
+Game::markChess( King * king, Figure * figure )
+{
+	for( int i = 0; i < 5; ++i )
+	{
+		for( int j = 0; j < 5; ++j )
+		{
+			if( figure->moves()[ i ][ j ].types().testFlag( Move::Hit ) )
+			{
+				int dx = 0;
+				int dy = 0;
+
+				if( figure->color() == Figure::White )
+				{
+					dx = j - 2;
+					dy = i - 2;
+				}
+				else
+				{
+					dx = 2 - j;
+					dy = 2 - i;
+				}
+
+				QList< QPair< int, int > > turns;
+				turns.append( qMakePair( figure->x(), figure->y() ) );
+
+				int x = figure->x() + dx;
+				int y = figure->y() + dy;
+
+				turns.append( qMakePair( x, y ) );
+
+				if( figure->moves()[ i ][ j ].dist() == Move::Any )
+				{
+					while( x >= 0 && x < 8 && y >= 0 && y < 8 )
+					{
+						if( m_board.figures()[ y ][ x ] == king )
+						{
+							m_isChess = true;
+
+							for( auto & p : qAsConst( turns ) )
+								m_board.markRed( p.first, p.second );
+
+							return;
+						}
+						else if( m_board.figures()[ y ][ x ] &&
+							m_board.figures()[ y ][ x ]->type() != Figure::KnightFigure )
+								break;
+
+						x += dx;
+						y += dy;
+
+						turns.append( qMakePair( x, y ) );
+					}
+				}
+				else if( x >= 0 && x < 8 && y >= 0 && y < 8 )
+				{
+					if( m_board.figures()[ y ][ x ] == king )
+					{
+						m_isChess = true;
+
+						for( auto & p : qAsConst( turns ) )
+							m_board.markRed( p.first, p.second );
+
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	m_isChess = false;
+}
+
+void
+Game::clicked( int x, int y )
+{
+	if( !m_selected )
+		firstClick( x, y );
+	else
+	{
+		clearCellsColor();
+
+		if( !secondClick( x, y ) )
+			checkChess();
 	}
 }
 

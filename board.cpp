@@ -38,6 +38,8 @@ namespace Chess {
 //
 
 Board::Board()
+	:	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
+	,	m_blackKing( static_cast< King* > ( m_figures.at( 4 ).data() ) )
 {
 	newGame();
 }
@@ -55,6 +57,74 @@ Board::figures()
 void
 Board::newGame()
 {
+	m_figures.at( 0 )->setX( 0 );
+	m_figures.at( 0 )->setY( 0 );
+	m_figures.at( 1 )->setX( 1 );
+	m_figures.at( 1 )->setY( 0 );
+	m_figures.at( 2 )->setX( 2 );
+	m_figures.at( 2 )->setY( 0 );
+	m_figures.at( 3 )->setX( 3 );
+	m_figures.at( 3 )->setY( 0 );
+	m_figures.at( 4 )->setX( 4 );
+	m_figures.at( 4 )->setY( 0 );
+	m_figures.at( 5 )->setX( 5 );
+	m_figures.at( 5 )->setY( 0 );
+	m_figures.at( 6 )->setX( 6 );
+	m_figures.at( 6 )->setY( 0 );
+	m_figures.at( 7 )->setX( 7 );
+	m_figures.at( 7 )->setY( 0 );
+
+	m_figures.at( 8 )->setX( 0 );
+	m_figures.at( 8 )->setY( 1 );
+	m_figures.at( 9 )->setX( 1 );
+	m_figures.at( 9 )->setY( 1 );
+	m_figures.at( 10 )->setX( 2 );
+	m_figures.at( 10 )->setY( 1 );
+	m_figures.at( 11 )->setX( 3 );
+	m_figures.at( 11 )->setY( 1 );
+	m_figures.at( 12 )->setX( 4 );
+	m_figures.at( 12 )->setY( 1 );
+	m_figures.at( 13 )->setX( 5 );
+	m_figures.at( 13 )->setY( 1 );
+	m_figures.at( 14 )->setX( 6 );
+	m_figures.at( 14 )->setY( 1 );
+	m_figures.at( 15 )->setX( 7 );
+	m_figures.at( 15 )->setY( 1 );
+
+	m_figures.at( 16 )->setX( 0 );
+	m_figures.at( 16 )->setY( 7 );
+	m_figures.at( 17 )->setX( 1 );
+	m_figures.at( 17 )->setY( 7 );
+	m_figures.at( 18 )->setX( 2 );
+	m_figures.at( 18 )->setY( 7 );
+	m_figures.at( 19 )->setX( 3 );
+	m_figures.at( 19 )->setY( 7 );
+	m_figures.at( 20 )->setX( 4 );
+	m_figures.at( 20 )->setY( 7 );
+	m_figures.at( 21 )->setX( 5 );
+	m_figures.at( 21 )->setY( 7 );
+	m_figures.at( 22 )->setX( 6 );
+	m_figures.at( 22 )->setY( 7 );
+	m_figures.at( 23 )->setX( 7 );
+	m_figures.at( 23 )->setY( 7 );
+
+	m_figures.at( 24 )->setX( 0 );
+	m_figures.at( 24 )->setY( 6 );
+	m_figures.at( 25 )->setX( 1 );
+	m_figures.at( 25 )->setY( 6 );
+	m_figures.at( 26 )->setX( 2 );
+	m_figures.at( 26 )->setY( 6 );
+	m_figures.at( 27 )->setX( 3 );
+	m_figures.at( 27 )->setY( 6 );
+	m_figures.at( 28 )->setX( 4 );
+	m_figures.at( 28 )->setY( 6 );
+	m_figures.at( 29 )->setX( 5 );
+	m_figures.at( 29 )->setY( 6 );
+	m_figures.at( 30 )->setX( 6 );
+	m_figures.at( 30 )->setY( 6 );
+	m_figures.at( 31 )->setX( 7 );
+	m_figures.at( 31 )->setY( 6 );
+
 	FiguresOnBoard tmp = {
 		{
 			m_figures.at( 0 ).data(),
@@ -198,6 +268,9 @@ Board::move( int fromX, int fromY, int toX, int toY )
 
 	m_board[ fromY ][ fromX ] = 0;
 	m_board[ toY ][ toX ] = from;
+
+	from->setX( toX );
+	from->setY( toY );
 
 	const QModelIndex fromIndex = index( fromY * 8 + fromX, 0 );
 	const QModelIndex toIndex = index( toY * 8 + toX, 0 );
@@ -360,6 +433,18 @@ Board::clearBlueRed()
 	const QModelIndex to = index( 8 * 8 - 1, 0 );
 
 	emit dataChanged( from, to );
+}
+
+King *
+Board::whiteKing() const
+{
+	return m_whiteKing;
+}
+
+King *
+Board::blackKing() const
+{
+	return m_blackKing;
 }
 
 } /* namespace Chess */

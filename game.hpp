@@ -79,6 +79,18 @@ private:
 		Figure * figure );
 	//! Clear cells color.
 	void clearCellsColor();
+	//! First click.
+	void firstClick( int x, int y );
+	//! Second click.
+	bool secondClick( int x, int y );
+	//! Mark turn.
+	void markTurnLabel();
+	//! Handle castling.
+	void handleCastling( int x, int y );
+	//! Check chess.
+	void checkChess();
+	//! Mark chess.
+	void markChess( King * king, Figure * figure );
 
 private:
 	//! Board.
@@ -97,6 +109,8 @@ private:
 	int m_selectedY;
 	//! Possible moves.
 	QVector< int > m_possibleMoves;
+	//! Is chess?
+	bool m_isChess;
 }; // class Game
 
 } /* namespace Chess */
