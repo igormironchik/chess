@@ -40,17 +40,17 @@ Item {
     }
 
     Rectangle {
-        id: blue
-        visible: false
-        anchors.fill: parent
-        color: "#880000FF"
-    }
-
-    Rectangle {
         id: red
         visible: false
         anchors.fill: parent
         color: "#88FF0000"
+    }
+
+    Rectangle {
+        id: blue
+        visible: false
+        anchors.fill: parent
+        color: "#880000FF"
     }
 
     property alias source: image.source

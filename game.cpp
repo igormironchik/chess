@@ -271,7 +271,8 @@ Game::secondClick( int x, int y )
 
 		markTurnLabel();
 
-		checkChess();
+		if( checkChess() )
+			checkCheckMate();
 
 		m_selected = 0;
 
@@ -352,11 +353,15 @@ Game::handleCastling( int x, int y,
 	}
 }
 
-void
+bool
 Game::checkChess()
 {
 	King * king = ( m_turnColor == Figure::Black ? m_board.blackKing() :
 		m_board.whiteKing() );
+
+	bool res = false;
+
+	m_isChess = false;
 
 	for( int x = 0; x < 8; ++x )
 	{
@@ -364,12 +369,15 @@ Game::checkChess()
 		{
 			if( m_board.figures()[ y ][ x ] &&
 				m_board.figures()[ y ][ x ]->color() != m_turnColor )
-					markChess( king, m_board.figures()[ y ][ x ] );
+					if( markChess( king, m_board.figures()[ y ][ x ] ) )
+						res = true;
 		}
 	}
+
+	return res;
 }
 
-void
+bool
 Game::markChess( King * king, Figure * figure )
 {
 	for( int i = 0; i < 5; ++i )
@@ -411,7 +419,7 @@ Game::markChess( King * king, Figure * figure )
 							for( auto & p : qAsConst( turns ) )
 								m_board.markRed( p.first, p.second );
 
-							return;
+							return true;
 						}
 						else if( m_board.figures()[ y ][ x ] &&
 							m_board.figures()[ y ][ x ]->type() != Figure::KnightFigure )
@@ -433,14 +441,14 @@ Game::markChess( King * king, Figure * figure )
 						for( auto & p : qAsConst( turns ) )
 							m_board.markRed( p.first, p.second );
 
-						return;
+						return true;
 					}
 				}
 			}
 		}
 	}
 
-	m_isChess = false;
+	return false;
 }
 
 bool
@@ -543,6 +551,12 @@ Game::isChessAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 		tmpBoard.figures()[ oldFigure->y() ][ oldFigure->x() ] = oldFigure;
 
 	return res;
+}
+
+void
+Game::checkCheckMate()
+{
+
 }
 
 void
