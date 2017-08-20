@@ -62,6 +62,9 @@ public:
 	//! \return Figures on board.
 	FiguresOnBoard & figures();
 
+	//! \return Figure by index in the array.
+	Figure * figure( int index ) const;
+
 	//! New game.
 	void newGame();
 

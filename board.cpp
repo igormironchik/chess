@@ -177,6 +177,12 @@ Board::figures()
 	return m_board;
 }
 
+Figure *
+Board::figure( int index ) const
+{
+	return m_figures.at( index ).data();
+}
+
 void
 Board::newGame()
 {

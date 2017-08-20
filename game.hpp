@@ -73,10 +73,10 @@ private slots:
 private:
 	//! Mark cells for move.
 	void markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
-		Figure * figure );
+		Figure * figure, Board & tmpBoard );
 	//! Mark cell for hit.
 	void markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
-		Figure * figure );
+		Figure * figure, Board & tmpBoard );
 	//! Clear cells color.
 	void clearCellsColor();
 	//! First click.
@@ -87,13 +87,14 @@ private:
 	void markTurnLabel();
 	//! Handle castling.
 	void handleCastling( int x, int y,
-		Figure * figure, Board & board );
+		Figure * figure, Board & board ) const;
 	//! Check chess.
 	void checkChess();
 	//! Mark chess.
 	void markChess( King * king, Figure * figure );
 	//! Will be a chess after move?
-	bool isChessAfterMove( int x, int y, Figure * figure );
+	bool isChessAfterMove( int x, int y,
+		Figure * figure, Board & tmpBoard ) const;
 
 private:
 	//! Board.

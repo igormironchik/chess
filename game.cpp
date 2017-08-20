@@ -76,7 +76,7 @@ Game::~Game()
 
 void
 Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
-	Figure * figure )
+	Figure * figure, Board & tmpBoard )
 {
 	x += dx;
 	y += dy;
@@ -89,7 +89,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 		{
 			if( !m_board.figures()[ y ][ x ] )
 			{
-				if( !isChessAfterMove( x, y, figure ) )
+				if( !isChessAfterMove( x, y, figure, tmpBoard ) )
 				{
 					m_board.markBlue( x, y );
 
@@ -114,7 +114,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 	{
 		if( !m_board.figures()[ y ][ x ] )
 		{
-			if( !isChessAfterMove( x, y, figure ) )
+			if( !isChessAfterMove( x, y, figure, tmpBoard ) )
 			{
 				m_board.markBlue( x, y );
 
@@ -126,7 +126,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 
 void
 Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
-	Figure * figure )
+	Figure * figure, Board & tmpBoard )
 {
 	x += dx;
 	y += dy;
@@ -139,7 +139,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 			{
 				if( figure->color() != m_board.figures()[ y ][ x ]->color() )
 				{
-					if( !isChessAfterMove( x, y, figure ) )
+					if( !isChessAfterMove( x, y, figure, tmpBoard ) )
 					{
 						m_board.markRed( x, y );
 
@@ -159,7 +159,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 		if( m_board.figures()[ y ][ x ] &&
 			figure->color() != m_board.figures()[ y ][ x ]->color() )
 		{
-			if( !isChessAfterMove( x, y, figure ) )
+			if( !isChessAfterMove( x, y, figure, tmpBoard ) )
 			{
 				m_board.markRed( x, y );
 
@@ -192,6 +192,8 @@ Game::firstClick( int x, int y )
 
 			const Figure::Moves moves = figure->moves();
 
+			Board tmpBoard = m_board;
+
 			for( int i = 0; i < 5; ++i )
 			{
 				for( int j = 0; j < 5; ++j )
@@ -214,7 +216,7 @@ Game::firstClick( int x, int y )
 					if( moves[ i ][ j ].types().testFlag( Move::Movement ) )
 					{
 						markCellsForMove( x, y, dx, dy,
-							moves[ i ][ j ].dist(), figure );
+							moves[ i ][ j ].dist(), figure, tmpBoard );
 					}
 
 					// Castling highlight.
@@ -247,7 +249,7 @@ Game::firstClick( int x, int y )
 					if( moves[ i ][ j ].types().testFlag( Move::Hit ) )
 					{
 						markCellForHit( x, y, dx, dy,
-							moves[ i ][ j ].dist(), figure );
+							moves[ i ][ j ].dist(), figure, tmpBoard );
 					}
 				}
 			}
@@ -316,7 +318,7 @@ Game::markTurnLabel()
 
 void
 Game::handleCastling( int x, int y,
-	Figure * figure, Board & board )
+	Figure * figure, Board & board ) const
 {
 	Q_UNUSED( y )
 
@@ -421,7 +423,8 @@ Game::markChess( King * king, Figure * figure )
 						turns.append( qMakePair( x, y ) );
 					}
 				}
-				else if( x >= 0 && x < 8 && y >= 0 && y < 8 )
+				else if( figure->moves()[ i ][ j ].dist() != Move::No &&
+					x >= 0 && x < 8 && y >= 0 && y < 8 )
 				{
 					if( m_board.figures()[ y ][ x ] == king )
 					{
@@ -441,9 +444,105 @@ Game::markChess( King * king, Figure * figure )
 }
 
 bool
-Game::isChessAfterMove( int x, int y, Figure * figure )
+Game::isChessAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 {
-	return true;
+	Figure * f = tmpBoard.figure( figure->index() );
+
+	const int oldX = f->x();
+	const int oldY = f->y();
+
+	bool res = false;
+
+	Figure * oldFigure = tmpBoard.figures()[ y ][ x ];
+
+	tmpBoard.move( oldX, oldY, x, y );
+
+	handleCastling( x, y, f, tmpBoard );
+
+	King * king = ( f->color() == Figure::White ? tmpBoard.whiteKing() :
+		tmpBoard.blackKing() );
+
+	for( int x = 0; x < 8; ++x )
+	{
+		for( int y = 0; y < 8; ++y )
+		{
+			if( tmpBoard.figures()[ y ][ x ] &&
+				tmpBoard.figures()[ y ][ x ]->color() != f->color() )
+			{
+				Figure * tmpFigure = tmpBoard.figures()[ y ][ x ];
+
+				for( int i = 0; i < 5; ++i )
+				{
+					for( int j = 0; j < 5; ++j )
+					{
+						if( tmpFigure->moves()[ i ][ j ].types().testFlag( Move::Hit ) )
+						{
+							int dx = 0;
+							int dy = 0;
+
+							if( tmpFigure->color() == Figure::White )
+							{
+								dx = j - 2;
+								dy = i - 2;
+							}
+							else
+							{
+								dx = 2 - j;
+								dy = 2 - i;
+							}
+
+							int x = tmpFigure->x() + dx;
+							int y = tmpFigure->y() + dy;
+
+							if( tmpFigure->moves()[ i ][ j ].dist() == Move::Any )
+							{
+								while( x >= 0 && x < 8 && y >= 0 && y < 8 )
+								{
+									if( tmpBoard.figures()[ y ][ x ] == king )
+									{
+										res = true;
+
+										break;
+									}
+									else if( tmpBoard.figures()[ y ][ x ] &&
+										tmpBoard.figures()[ y ][ x ]->type() !=
+											Figure::KnightFigure )
+												break;
+
+									x += dx;
+									y += dy;
+								}
+							}
+							else if( x >= 0 && x < 8 && y >= 0 && y < 8 )
+							{
+								if( tmpBoard.figures()[ y ][ x ] == king )
+									res = true;
+							}
+						}
+
+						if( res )
+							break;
+					}
+
+					if( res )
+						break;
+				}
+
+				if( res )
+					break;
+			}
+		}
+
+		if( res )
+			break;
+	}
+
+	tmpBoard.move( x, y, oldX, oldY );
+
+	if( oldFigure )
+		tmpBoard.figures()[ oldFigure->y() ][ oldFigure->x() ] = oldFigure;
+
+	return res;
 }
 
 void
