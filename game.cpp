@@ -194,6 +194,7 @@ Game::firstClick( int x, int y )
 
 			Board tmpBoard = m_board;
 
+			// Fr each possibe move.
 			for( int i = 0; i < 5; ++i )
 			{
 				for( int j = 0; j < 5; ++j )
@@ -363,6 +364,7 @@ Game::checkChess()
 
 	m_isChess = false;
 
+	// For each figure.
 	for( int x = 0; x < 8; ++x )
 	{
 		for( int y = 0; y < 8; ++y )
@@ -380,6 +382,7 @@ Game::checkChess()
 bool
 Game::markChess( King * king, Figure * figure )
 {
+	// For each possible move.
 	for( int i = 0; i < 5; ++i )
 	{
 		for( int j = 0; j < 5; ++j )
@@ -470,6 +473,7 @@ Game::isChessAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 	King * king = ( f->color() == Figure::White ? tmpBoard.whiteKing() :
 		tmpBoard.blackKing() );
 
+	// For each figure.
 	for( int x = 0; x < 8; ++x )
 	{
 		for( int y = 0; y < 8; ++y )
@@ -479,6 +483,7 @@ Game::isChessAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 			{
 				Figure * tmpFigure = tmpBoard.figures()[ y ][ x ];
 
+				// For each possible move.
 				for( int i = 0; i < 5; ++i )
 				{
 					for( int j = 0; j < 5; ++j )
@@ -560,6 +565,12 @@ Game::checkCheckMate()
 }
 
 void
+Game::checkStaleMate()
+{
+
+}
+
+void
 Game::clicked( int x, int y )
 {
 	if( !m_selected )
@@ -568,8 +579,8 @@ Game::clicked( int x, int y )
 	{
 		clearCellsColor();
 
-		if( !secondClick( x, y ) )
-			checkChess();
+		if( secondClick( x, y ) )
+			checkStaleMate();
 	}
 }
 

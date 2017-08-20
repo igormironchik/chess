@@ -97,6 +97,8 @@ private:
 		Figure * figure, Board & tmpBoard ) const;
 	//! Check checkmate.
 	void checkCheckMate();
+	//! Check stalemate.
+	void checkStaleMate();
 
 private:
 	//! Board.
