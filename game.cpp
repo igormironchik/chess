@@ -89,7 +89,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 		{
 			if( !m_board.figures()[ y ][ x ] )
 			{
-				if( !isChessAfterMove( x, y, figure, tmpBoard ) )
+				if( !isCheckAfterMove( x, y, figure, tmpBoard ) )
 				{
 					m_board.markBlue( x, y );
 
@@ -114,7 +114,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 	{
 		if( !m_board.figures()[ y ][ x ] )
 		{
-			if( !isChessAfterMove( x, y, figure, tmpBoard ) )
+			if( !isCheckAfterMove( x, y, figure, tmpBoard ) )
 			{
 				m_board.markBlue( x, y );
 
@@ -139,7 +139,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 			{
 				if( figure->color() != m_board.figures()[ y ][ x ]->color() )
 				{
-					if( !isChessAfterMove( x, y, figure, tmpBoard ) )
+					if( !isCheckAfterMove( x, y, figure, tmpBoard ) )
 					{
 						m_board.markRed( x, y );
 
@@ -159,7 +159,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 		if( m_board.figures()[ y ][ x ] &&
 			figure->color() != m_board.figures()[ y ][ x ]->color() )
 		{
-			if( !isChessAfterMove( x, y, figure, tmpBoard ) )
+			if( !isCheckAfterMove( x, y, figure, tmpBoard ) )
 			{
 				m_board.markRed( x, y );
 
@@ -272,7 +272,7 @@ Game::secondClick( int x, int y )
 
 		markTurnLabel();
 
-		if( checkChess() )
+		if( checkCheck() )
 			checkCheckMate();
 
 		m_selected = 0;
@@ -285,7 +285,7 @@ Game::secondClick( int x, int y )
 
 		clearCellsColor();
 
-		checkChess();
+		checkCheck();
 
 		firstClick( x, y );
 
@@ -355,7 +355,7 @@ Game::handleCastling( int x, int y,
 }
 
 bool
-Game::checkChess()
+Game::checkCheck()
 {
 	King * king = ( m_turnColor == Figure::Black ? m_board.blackKing() :
 		m_board.whiteKing() );
@@ -371,7 +371,7 @@ Game::checkChess()
 		{
 			if( m_board.figures()[ y ][ x ] &&
 				m_board.figures()[ y ][ x ]->color() != m_turnColor )
-					if( markChess( king, m_board.figures()[ y ][ x ] ) )
+					if( markCheck( king, m_board.figures()[ y ][ x ] ) )
 						res = true;
 		}
 	}
@@ -380,7 +380,7 @@ Game::checkChess()
 }
 
 bool
-Game::markChess( King * king, Figure * figure )
+Game::markCheck( King * king, Figure * figure )
 {
 	// For each possible move.
 	for( int i = 0; i < 5; ++i )
@@ -455,7 +455,7 @@ Game::markChess( King * king, Figure * figure )
 }
 
 bool
-Game::isChessAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
+Game::isCheckAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 {
 	Figure * f = tmpBoard.figure( figure->index() );
 

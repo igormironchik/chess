@@ -88,12 +88,12 @@ private:
 	//! Handle castling.
 	void handleCastling( int x, int y,
 		Figure * figure, Board & board ) const;
-	//! Check chess.
-	bool checkChess();
-	//! Mark chess.
-	bool markChess( King * king, Figure * figure );
-	//! Will be a chess after move?
-	bool isChessAfterMove( int x, int y,
+	//! Check check.
+	bool checkCheck();
+	//! Mark check.
+	bool markCheck( King * king, Figure * figure );
+	//! Will be a check after move?
+	bool isCheckAfterMove( int x, int y,
 		Figure * figure, Board & tmpBoard ) const;
 	//! Check checkmate.
 	void checkCheckMate();
