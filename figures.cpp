@@ -57,13 +57,20 @@ Move::dist() const
 // Figure
 //
 
-Figure::Figure( int xv, int yv, Color c, const QString & n )
+Figure::Figure( int xv, int yv, Color c, const QString & n, int index )
 	:	m_x( xv )
 	,	m_y( yv )
 	,	m_c( c )
 	,	m_name( n )
 	,	m_firstMoveDone( false )
+	,	m_index( index )
 {
+}
+
+int
+Figure::index() const
+{
+	return m_index;
 }
 
 Figure::~Figure()
@@ -123,8 +130,8 @@ Figure::firstMoveDone()
 // Pawn.
 //
 
-Pawn::Pawn( int xv, int yv, Color c, const QString & n )
-	:	Figure( xv, yv, c, n )
+Pawn::Pawn( int xv, int yv, Color c, const QString & n, int index )
+	:	Figure( xv, yv, c, n, index )
 {
 }
 
@@ -175,8 +182,8 @@ const Pawn::Moves Pawn::m_moves = {
 // Castle
 //
 
-Castle::Castle( int xv, int yv, Color c, const QString & n )
-	:	Figure( xv, yv, c, n )
+Castle::Castle( int xv, int yv, Color c, const QString & n, int index )
+	:	Figure( xv, yv, c, n, index )
 {
 }
 
@@ -231,8 +238,8 @@ const Castle::Moves Castle::m_moves = {
 // Knight
 //
 
-Knight::Knight( int xv, int yv, Color c, const QString & n )
-	:	Figure( xv, yv, c, n )
+Knight::Knight( int xv, int yv, Color c, const QString & n, int index )
+	:	Figure( xv, yv, c, n, index )
 {
 }
 
@@ -286,8 +293,8 @@ const Knight::Moves Knight::m_moves = {
 //
 
 
-Bishop::Bishop( int xv, int yv, Color c, const QString & n )
-	:	Figure( xv, yv, c, n )
+Bishop::Bishop( int xv, int yv, Color c, const QString & n, int index )
+	:	Figure( xv, yv, c, n, index )
 {
 }
 
@@ -341,8 +348,8 @@ const Bishop::Moves Bishop::m_moves = {
 // Queen
 //
 
-Queen::Queen( int xv, int yv, Color c, const QString & n )
-	:	Figure( xv, yv, c, n )
+Queen::Queen( int xv, int yv, Color c, const QString & n, int index )
+	:	Figure( xv, yv, c, n, index )
 {
 }
 
@@ -396,8 +403,8 @@ const Queen::Moves Queen::m_moves = {
 // King
 //
 
-King::King( int xv, int yv, Color c, const QString & n )
-	:	Figure( xv, yv, c, n )
+King::King( int xv, int yv, Color c, const QString & n, int index )
+	:	Figure( xv, yv, c, n, index )
 {
 }
 

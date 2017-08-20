@@ -89,9 +89,12 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 		{
 			if( !m_board.figures()[ y ][ x ] )
 			{
-				m_board.markBlue( x, y );
+				if( !isChessAfterMove( x, y, figure ) )
+				{
+					m_board.markBlue( x, y );
 
-				m_possibleMoves.append( x * 10 + y );
+					m_possibleMoves.append( x * 10 + y );
+				}
 			}
 			else
 				break;
@@ -111,9 +114,12 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 	{
 		if( !m_board.figures()[ y ][ x ] )
 		{
-			m_board.markBlue( x, y );
+			if( !isChessAfterMove( x, y, figure ) )
+			{
+				m_board.markBlue( x, y );
 
-			m_possibleMoves.append( x * 10 + y );
+				m_possibleMoves.append( x * 10 + y );
+			}
 		}
 	}
 }
@@ -133,9 +139,12 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 			{
 				if( figure->color() != m_board.figures()[ y ][ x ]->color() )
 				{
-					m_board.markRed( x, y );
+					if( !isChessAfterMove( x, y, figure ) )
+					{
+						m_board.markRed( x, y );
 
-					m_possibleMoves.append( x * 10 + y );
+						m_possibleMoves.append( x * 10 + y );
+					}
 				}
 
 				break;
@@ -150,9 +159,12 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 		if( m_board.figures()[ y ][ x ] &&
 			figure->color() != m_board.figures()[ y ][ x ]->color() )
 		{
-			m_board.markRed( x, y );
+			if( !isChessAfterMove( x, y, figure ) )
+			{
+				m_board.markRed( x, y );
 
-			m_possibleMoves.append( x * 10 + y );
+				m_possibleMoves.append( x * 10 + y );
+			}
 		}
 	}
 }
@@ -250,7 +262,7 @@ Game::secondClick( int x, int y )
 	{
 		m_board.move( m_selectedX, m_selectedY, x, y );
 
-		handleCastling( x, y );
+		handleCastling( x, y, m_selected, m_board );
 
 		m_selected->firstMoveDone();
 		m_possibleMoves.clear();
@@ -263,10 +275,18 @@ Game::secondClick( int x, int y )
 
 		return true;
 	}
+	else
+	{
+		m_selected = 0;
 
-	m_selected = 0;
+		clearCellsColor();
 
-	return false;
+		checkChess();
+
+		firstClick( x, y );
+
+		return false;
+	}
 }
 
 void
@@ -295,31 +315,32 @@ Game::markTurnLabel()
 }
 
 void
-Game::handleCastling( int x, int y )
+Game::handleCastling( int x, int y,
+	Figure * figure, Board & board )
 {
 	Q_UNUSED( y )
 
 	// Castling.
-	if( m_selected->type() == Figure::KingFigure &&
-		!m_selected->isFirstMoveDone() )
+	if( figure->type() == Figure::KingFigure &&
+		!figure->isFirstMoveDone() )
 	{
-		switch( m_selected->color() )
+		switch( figure->color() )
 		{
 			case Figure::White :
 			{
 				if( x == 1 )
-					m_board.move( 0, 7, 2, 7 );
+					board.move( 0, 7, 2, 7 );
 				else if( x == 6 )
-					m_board.move( 7, 7, 5, 7 );
+					board.move( 7, 7, 5, 7 );
 			}
 				break;
 
 			case Figure::Black :
 			{
 				if( x == 1 )
-					m_board.move( 0, 0, 2, 0 );
+					board.move( 0, 0, 2, 0 );
 				else if( x == 6 )
-					m_board.move( 7, 0, 5, 0 );
+					board.move( 7, 0, 5, 0 );
 			}
 				break;
 
@@ -417,6 +438,12 @@ Game::markChess( King * king, Figure * figure )
 	}
 
 	m_isChess = false;
+}
+
+bool
+Game::isChessAfterMove( int x, int y, Figure * figure )
+{
+	return true;
 }
 
 void

@@ -86,11 +86,14 @@ private:
 	//! Mark turn.
 	void markTurnLabel();
 	//! Handle castling.
-	void handleCastling( int x, int y );
+	void handleCastling( int x, int y,
+		Figure * figure, Board & board );
 	//! Check chess.
 	void checkChess();
 	//! Mark chess.
 	void markChess( King * king, Figure * figure );
+	//! Will be a chess after move?
+	bool isChessAfterMove( int x, int y, Figure * figure );
 
 private:
 	//! Board.

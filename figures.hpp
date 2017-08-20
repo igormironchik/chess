@@ -96,7 +96,8 @@ public:
 		PawnFigure
 	}; // enum FigureType
 
-	Figure( int xv, int yv, Color c, const QString & name );
+	Figure( int xv, int yv, Color c, const QString & name,
+		int index );
 	virtual ~Figure();
 
 	//! Moves.
@@ -107,6 +108,9 @@ public:
 
 	//! \return Type of figure.
 	virtual FigureType type() const = 0;
+
+	//! \return Index in the array.
+	int index() const;
 
 	//! \return X.
 	int x() const;
@@ -140,6 +144,8 @@ private:
 	QString m_name;
 	//! First move has been done.
 	bool m_firstMoveDone;
+	//! Index in the array.
+	int m_index;
 }; // class Figure
 
 
@@ -152,7 +158,7 @@ class Pawn final
 	:	public Figure
 {
 public:
-	Pawn( int xv, int yv, Color c, const QString & n );
+	Pawn( int xv, int yv, Color c, const QString & n, int index );
 	~Pawn();
 
 	//! \return Possible moves.
@@ -175,7 +181,7 @@ class Castle final
 	:	public Figure
 {
 public:
-	Castle( int xv, int yv, Color c, const QString & n );
+	Castle( int xv, int yv, Color c, const QString & n, int index );
 	~Castle();
 
 	//! \return Possible moves.
@@ -198,7 +204,7 @@ class Knight final
 	:	public Figure
 {
 public:
-	Knight( int xv, int yv, Color c, const QString & n );
+	Knight( int xv, int yv, Color c, const QString & n, int index );
 	~Knight();
 
 	//! \return Possible moves.
@@ -221,7 +227,7 @@ class Bishop final
 	:	public Figure
 {
 public:
-	Bishop( int xv, int yv, Color c, const QString & n );
+	Bishop( int xv, int yv, Color c, const QString & n, int index );
 	~Bishop();
 
 	//! \return Possible moves.
@@ -244,7 +250,7 @@ class Queen final
 	:	public Figure
 {
 public:
-	Queen( int xv, int yv, Color c, const QString & n );
+	Queen( int xv, int yv, Color c, const QString & n, int index );
 	~Queen();
 
 	//! \return Possible moves.
@@ -267,7 +273,7 @@ class King final
 	:	public Figure
 {
 public:
-	King( int xv, int yv, Color c, const QString & n );
+	King( int xv, int yv, Color c, const QString & n, int index );
 	~King();
 
 	//! \return Possible moves.

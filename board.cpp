@@ -38,7 +38,8 @@ namespace Chess {
 //
 
 Board::Board()
-	:	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
+	:	m_figures( std::move( initFigures() ) )
+	,	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
 	,	m_blackKing( static_cast< King* > ( m_figures.at( 4 ).data() ) )
 {
 	newGame();
@@ -46,6 +47,128 @@ Board::Board()
 
 Board::~Board()
 {
+}
+
+Board::Board( const Board & other )
+	:	m_figures( std::move( initFigures() ) )
+	,	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
+	,	m_blackKing( static_cast< King* > ( m_figures.at( 4 ).data() ) )
+{
+	copyState( other );
+}
+
+Board &
+Board::operator = ( const Board & other )
+{
+	if( this != &other )
+	{
+		m_figures = std::move( initFigures() );
+		m_whiteKing = static_cast< King* > ( m_figures.at( 20 ).data() );
+		m_blackKing = static_cast< King* > ( m_figures.at( 4 ).data() );
+
+		copyState( other );
+	}
+
+	return *this;
+}
+
+void
+Board::copyState( const Board & other )
+{
+	for( int i = 0; i < 8; ++i )
+	{
+		for( int j = 0; j < 8; ++j )
+		{
+			if( other.m_board[ i ][ j ] )
+			{
+				Figure * o = other.m_board[ i ][ j ];
+				Figure * f = m_figures.at( o->index() ).data();
+
+				m_board[ i ][ j ] = f;
+
+				f->setX( o->x() );
+				f->setY( o->y() );
+			}
+			else
+				m_board[ i ][ j ] = nullptr;
+
+			m_colors[ i ][ j ] = other.m_colors[ i ][ j ];
+		}
+	}
+}
+
+QList< QSharedPointer< Figure > >
+Board::initFigures() const
+{
+	QList< QSharedPointer< Figure > > res = {
+		QSharedPointer< Figure >{ new Castle{ 0, 0, Figure::Black,
+			QLatin1String( "castle-black-1" ), 0 } },
+		QSharedPointer< Figure >{ new Knight{ 1, 0, Figure::Black,
+			QLatin1String( "knight-black-1" ), 1 } },
+		QSharedPointer< Figure >{ new Bishop{ 2, 0, Figure::Black,
+			QLatin1String( "bishop-black-1" ), 2 } },
+		QSharedPointer< Figure >{ new Queen{ 3, 0, Figure::Black,
+			QLatin1String( "queen-black" ), 3 } },
+		QSharedPointer< Figure >{ new King{ 4, 0, Figure::Black,
+			QLatin1String( "king-black" ), 4 } },
+		QSharedPointer< Figure >{ new Bishop{ 5, 0, Figure::Black,
+			QLatin1String( "bishop-black-2" ), 5 } },
+		QSharedPointer< Figure >{ new Knight{ 6, 0, Figure::Black,
+			QLatin1String( "knight-black-2" ), 6 } },
+		QSharedPointer< Figure >{ new Castle{ 7, 0, Figure::Black,
+			QLatin1String( "castle-black-2" ), 7 } },
+		QSharedPointer< Figure >{ new Pawn{ 0, 1, Figure::Black,
+			QLatin1String( "pawn-black-1" ), 8 } },
+		QSharedPointer< Figure >{ new Pawn{ 1, 1, Figure::Black,
+			QLatin1String( "pawn-black-2" ), 9 } },
+		QSharedPointer< Figure >{ new Pawn{ 2, 1, Figure::Black,
+			QLatin1String( "pawn-black-3" ), 10 } },
+		QSharedPointer< Figure >{ new Pawn{ 3, 1, Figure::Black,
+			QLatin1String( "pawn-black-4" ), 11 } },
+		QSharedPointer< Figure >{ new Pawn{ 4, 1, Figure::Black,
+			QLatin1String( "pawn-black-5" ), 12 } },
+		QSharedPointer< Figure >{ new Pawn{ 5, 1, Figure::Black,
+			QLatin1String( "pawn-black-6" ), 13 } },
+		QSharedPointer< Figure >{ new Pawn{ 6, 1, Figure::Black,
+			QLatin1String( "pawn-black-7" ), 14 } },
+		QSharedPointer< Figure >{ new Pawn{ 7, 1, Figure::Black,
+			QLatin1String( "pawn-black-8" ), 15 } },
+
+		QSharedPointer< Figure >{ new Castle{ 0, 7, Figure::White,
+			QLatin1String( "castle-white-1" ), 16 } },
+		QSharedPointer< Figure >{ new Knight{ 1, 7, Figure::White,
+			QLatin1String( "knight-white-1" ), 17 } },
+		QSharedPointer< Figure >{ new Bishop{ 2, 7, Figure::White,
+			QLatin1String( "bishop-white-1" ), 18 } },
+		QSharedPointer< Figure >{ new Queen{ 3, 7, Figure::White,
+			QLatin1String( "queen-white" ), 19 } },
+		QSharedPointer< Figure >{ new King{ 4, 7, Figure::White,
+			QLatin1String( "king-white" ), 20 } },
+		QSharedPointer< Figure >{ new Bishop{ 5, 7, Figure::White,
+			QLatin1String( "bishop-white-2" ), 21 } },
+		QSharedPointer< Figure >{ new Knight{ 6, 7, Figure::White,
+			QLatin1String( "knight-white-2" ), 22 } },
+		QSharedPointer< Figure >{ new Castle{ 7, 7, Figure::White,
+			QLatin1String( "castle-white-2" ), 23 } },
+		QSharedPointer< Figure >{ new Pawn{ 0, 6, Figure::White,
+			QLatin1String( "pawn-white-1" ), 24 } },
+		QSharedPointer< Figure >{ new Pawn{ 1, 6, Figure::White,
+			QLatin1String( "pawn-white-2" ), 25 } },
+		QSharedPointer< Figure >{ new Pawn{ 2, 6, Figure::White,
+			QLatin1String( "pawn-white-3" ), 26 } },
+		QSharedPointer< Figure >{ new Pawn{ 3, 6, Figure::White,
+			QLatin1String( "pawn-white-4" ), 27 } },
+		QSharedPointer< Figure >{ new Pawn{ 4, 6, Figure::White,
+			QLatin1String( "pawn-white-5" ), 28 } },
+		QSharedPointer< Figure >{ new Pawn{ 5, 6, Figure::White,
+			QLatin1String( "pawn-white-6" ), 29 } },
+		QSharedPointer< Figure >{ new Pawn{ 6, 6, Figure::White,
+			QLatin1String( "pawn-white-7" ), 30 } },
+		QSharedPointer< Figure >{ new Pawn{ 7, 6, Figure::White,
+			QLatin1String( "pawn-white-8" ), 31 } }
+	};
+
+	return res;
 }
 
 Board::FiguresOnBoard &
@@ -192,74 +315,6 @@ Board::newGame()
 	std::copy( &ctmp[ 0 ][ 0 ], &ctmp[ 0 ][ 0 ] +
 		sizeof( Colors ) / sizeof( Color ), &m_colors[ 0 ][ 0 ] );
 }
-
-const QList< QSharedPointer< Figure > > Board::m_figures = {
-	QSharedPointer< Figure >{ new Castle{ 0, 0, Figure::Black,
-		QLatin1String( "castle-black-1" ) } },
-	QSharedPointer< Figure >{ new Knight{ 1, 0, Figure::Black,
-		QLatin1String( "knight-black-1" ) } },
-	QSharedPointer< Figure >{ new Bishop{ 2, 0, Figure::Black,
-		QLatin1String( "bishop-black-1" ) } },
-	QSharedPointer< Figure >{ new Queen{ 3, 0, Figure::Black,
-		QLatin1String( "queen-black" ) } },
-	QSharedPointer< Figure >{ new King{ 4, 0, Figure::Black,
-		QLatin1String( "king-black" ) } },
-	QSharedPointer< Figure >{ new Bishop{ 5, 0, Figure::Black,
-		QLatin1String( "bishop-black-2" ) } },
-	QSharedPointer< Figure >{ new Knight{ 6, 0, Figure::Black,
-		QLatin1String( "knight-black-2" ) } },
-	QSharedPointer< Figure >{ new Castle{ 7, 0, Figure::Black,
-		QLatin1String( "castle-black-2" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 0, 1, Figure::Black,
-		QLatin1String( "pawn-black-1" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 1, 1, Figure::Black,
-		QLatin1String( "pawn-black-2" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 2, 1, Figure::Black,
-		QLatin1String( "pawn-black-3" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 3, 1, Figure::Black,
-		QLatin1String( "pawn-black-4" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 4, 1, Figure::Black,
-		QLatin1String( "pawn-black-5" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 5, 1, Figure::Black,
-		QLatin1String( "pawn-black-6" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 6, 1, Figure::Black,
-		QLatin1String( "pawn-black-7" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 7, 1, Figure::Black,
-		QLatin1String( "pawn-black-8" ) } },
-
-	QSharedPointer< Figure >{ new Castle{ 0, 7, Figure::White,
-		QLatin1String( "castle-white-1" ) } },
-	QSharedPointer< Figure >{ new Knight{ 1, 7, Figure::White,
-		QLatin1String( "knight-white-1" ) } },
-	QSharedPointer< Figure >{ new Bishop{ 2, 7, Figure::White,
-		QLatin1String( "bishop-white-1" ) } },
-	QSharedPointer< Figure >{ new Queen{ 3, 7, Figure::White,
-		QLatin1String( "queen-white" ) } },
-	QSharedPointer< Figure >{ new King{ 4, 7, Figure::White,
-		QLatin1String( "king-white" ) } },
-	QSharedPointer< Figure >{ new Bishop{ 5, 7, Figure::White,
-		QLatin1String( "bishop-white-2" ) } },
-	QSharedPointer< Figure >{ new Knight{ 6, 7, Figure::White,
-		QLatin1String( "knight-white-2" ) } },
-	QSharedPointer< Figure >{ new Castle{ 7, 7, Figure::White,
-		QLatin1String( "castle-white-2" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 0, 6, Figure::White,
-		QLatin1String( "pawn-white-1" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 1, 6, Figure::White,
-		QLatin1String( "pawn-white-2" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 2, 6, Figure::White,
-		QLatin1String( "pawn-white-3" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 3, 6, Figure::White,
-		QLatin1String( "pawn-white-4" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 4, 6, Figure::White,
-		QLatin1String( "pawn-white-5" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 5, 6, Figure::White,
-		QLatin1String( "pawn-white-6" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 6, 6, Figure::White,
-		QLatin1String( "pawn-white-7" ) } },
-	QSharedPointer< Figure >{ new Pawn{ 7, 6, Figure::White,
-		QLatin1String( "pawn-white-8" ) } }
-};
 
 void
 Board::move( int fromX, int fromY, int toX, int toY )

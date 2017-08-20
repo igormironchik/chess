@@ -46,6 +46,9 @@ public:
 	Board();
 	~Board();
 
+	Board( const Board & other );
+	Board & operator = ( const Board & other );
+
 	enum RoleNames {
 		CellImageSourceRole = Qt::UserRole,
 		CurrentPieceColorRole = CellImageSourceRole + 1,
@@ -83,12 +86,17 @@ public:
 		Q_DECL_OVERRIDE;
 	QHash< int, QByteArray > roleNames() const Q_DECL_OVERRIDE;
 
+private:
+	//! Init figures.
+	QList< QSharedPointer< Figure > > initFigures() const;
+	//! Copy state of the board.
+	void copyState( const Board & other );
 
 private:
 	//! Board.
 	FiguresOnBoard m_board;
 	//! Figures.
-	static const QList< QSharedPointer< Figure > > m_figures;
+	QList< QSharedPointer< Figure > > m_figures;
 	//! White king.
 	King * m_whiteKing;
 	//! Black king.
