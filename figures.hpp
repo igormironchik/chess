@@ -131,7 +131,7 @@ public:
 	//! \return Is first move done?
 	bool isFirstMoveDone() const;
 	//! Mark figure as did first move.
-	void firstMoveDone();
+	void firstMoveDone( bool done = true );
 
 private:
 	//! X.

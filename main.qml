@@ -22,8 +22,9 @@
 
 import QtQuick.Window 2.2
 import QtQuick 2.0
+import QtQuick.Controls 2.2
 
-Window {
+ApplicationWindow {
     id: appWindow
     visible: true
 
@@ -55,7 +56,35 @@ Window {
             font.bold: true
             font.pixelSize: 14
 
-            text: "White"
+            text: qsTr( "White" )
+        }
+    }
+
+    Dialog {
+        id: dlg
+        title: qsTr( "Checkmate..." )
+        standardButtons: Dialog.Ok
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        x: appWindow.width / 2 - width / 2
+        y: appWindow.height / 2 - height / 2
+
+        Text {
+            anchors.centerIn: parent
+            font.pixelSize: 30
+            font.bold: true
+            text: ( turn.text === qsTr( "Black" ) ?
+                qsTr( "White" ) : qsTr( "Black" ) ) + qsTr( " won!!!" )
+        }
+
+        onClosed: { board.newGame() }
+    }
+
+    Connections {
+        target: game
+        onCheckmate : {
+            dlg.open()
         }
     }
 }

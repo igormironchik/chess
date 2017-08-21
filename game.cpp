@@ -49,7 +49,7 @@ Error::~Error() noexcept
 // Game
 //
 
-Game::Game( QObject * root, Board & board )
+Game::Game( QObject * root, Board & board, Signals & s )
 	:	m_board( board )
 	,	m_root( root )
 	,	m_boardObject( 0 )
@@ -58,6 +58,7 @@ Game::Game( QObject * root, Board & board )
 	,	m_selectedX( 0 )
 	,	m_selectedY( 0 )
 	,	m_isChess( false )
+	,	m_signals( s )
 {
 	m_boardObject = m_root->findChild< QObject* > ( QLatin1String( "board" ) );
 
@@ -68,6 +69,8 @@ Game::Game( QObject * root, Board & board )
 		this, SLOT( clicked( int, int ) ) );
 	connect( m_boardObject, SIGNAL( hovered( int, int ) ),
 		this, SLOT( hovered( int, int ) ) );
+	connect( m_boardObject, SIGNAL( newGame() ),
+		this, SLOT( newGame() ) );
 }
 
 Game::~Game()
@@ -194,7 +197,7 @@ Game::firstClick( int x, int y )
 
 			Board tmpBoard = m_board;
 
-			// Fr each possibe move.
+			// For each possibe move.
 			for( int i = 0; i < 5; ++i )
 			{
 				for( int j = 0; j < 5; ++j )
@@ -272,8 +275,16 @@ Game::secondClick( int x, int y )
 
 		markTurnLabel();
 
-		if( checkCheck() )
-			checkCheckMate();
+		if( checkCheck() && isCheckMate() )
+		{
+			m_turnColor = Figure::White;
+			m_isChess = false;
+			m_possibleMoves.clear();
+			m_selectedX = -1;
+			m_selectedY = -1;
+
+			emit m_signals.checkmate();
+		}
 
 		m_selected = 0;
 
@@ -304,7 +315,7 @@ Game::markTurnLabel()
 			QLatin1String( "turn" ) );
 
 		if( turn )
-			turn->setProperty( "text", QLatin1String( "Black" ) );
+			turn->setProperty( "text", tr( "Black" ) );
 	}
 	else
 	{
@@ -314,7 +325,7 @@ Game::markTurnLabel()
 			QLatin1String( "turn" ) );
 
 		if( turn )
-			turn->setProperty( "text", QLatin1String( "White" ) );
+			turn->setProperty( "text", tr( "White" ) );
 	}
 }
 
@@ -558,16 +569,102 @@ Game::isCheckAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 	return res;
 }
 
-void
-Game::checkCheckMate()
+bool
+Game::isCheckMate()
 {
+	Board tmpBoard = m_board;
 
+	// For each figure.
+	for( int x = 0; x < 8; ++x )
+	{
+		for( int y = 0; y < 8; ++y )
+		{
+			if( tmpBoard.figures()[ y ][ x ] &&
+				tmpBoard.figures()[ y ][ x ]->color() == m_turnColor )
+			{
+				Figure * tmpFigure = tmpBoard.figures()[ y ][ x ];
+
+				// For each possible move.
+				for( int i = 0; i < 5; ++i )
+				{
+					for( int j = 0; j < 5; ++j )
+					{
+						int dx = 0;
+						int dy = 0;
+
+						if( tmpFigure->color() == Figure::White )
+						{
+							dx = j - 2;
+							dy = i - 2;
+						}
+						else
+						{
+							dx = 2 - j;
+							dy = 2 - i;
+						}
+
+						int x = tmpFigure->x() + dx;
+						int y = tmpFigure->y() + dy;
+
+						int move = 0;
+
+						Move::Distance d = tmpFigure->moves()[ i ][ j ].dist();
+
+						if( d == Move::Any || d == Move::TwoFirstTime )
+						{
+							while( x >= 0 && x < 8 && y >= 0 && y < 8 )
+							{
+								++move;
+
+								if( tmpBoard.figures()[ y ][ x ] &&
+									( !tmpFigure->moves()[ i ][ j ]
+										.types().testFlag( Move::Hit ) ||
+									tmpBoard.figures()[ y ][ x ]->color() == m_turnColor ) )
+										break;
+
+								const bool firstMoveDone =
+									tmpFigure->isFirstMoveDone();
+
+								if( !isCheckAfterMove( x, y, tmpFigure, tmpBoard ) )
+									return false;
+
+								if( d == Move::TwoFirstTime )
+								{
+									if( firstMoveDone )
+										break;
+									else if( move == 2 )
+										break;
+								}
+
+								x += dx;
+								y += dy;
+							}
+						}
+						else if( tmpFigure->moves()[ i ][ j ].dist() != Move::No &&
+							x >= 0 && x < 8 && y >= 0 && y < 8 )
+						{
+							if( tmpBoard.figures()[ y ][ x ] &&
+								( !tmpFigure->moves()[ i ][ j ]
+									.types().testFlag( Move::Hit ) ||
+								tmpBoard.figures()[ y ][ x ]->color() == m_turnColor ) )
+									continue;
+
+							if( !isCheckAfterMove( x, y, tmpFigure, tmpBoard ) )
+								return false;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return true;
 }
 
-void
-Game::checkStaleMate()
+bool
+Game::isStaleMate()
 {
-
+	return false;
 }
 
 void
@@ -579,8 +676,10 @@ Game::clicked( int x, int y )
 	{
 		clearCellsColor();
 
-		if( secondClick( x, y ) )
-			checkStaleMate();
+		if( secondClick( x, y ) && isStaleMate() )
+		{
+
+		}
 	}
 }
 
@@ -589,6 +688,13 @@ Game::hovered( int x, int y )
 {
 	Q_UNUSED( x )
 	Q_UNUSED( y )
+}
+
+void
+Game::newGame()
+{
+	m_board.newGame();
+	m_board.update();
 }
 
 } /* namespace Chess */

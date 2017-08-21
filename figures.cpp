@@ -120,9 +120,9 @@ Figure::isFirstMoveDone() const
 }
 
 void
-Figure::firstMoveDone()
+Figure::firstMoveDone( bool done )
 {
-	m_firstMoveDone = true;
+	m_firstMoveDone = done;
 }
 
 

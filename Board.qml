@@ -31,6 +31,7 @@ Rectangle {
 
     signal clicked( int x, int y )
     signal hovered( int x, int y )
+    signal newGame()
 
     Row {
         id: top

@@ -28,14 +28,18 @@
 // Chess include.
 #include "game.hpp"
 #include "board.hpp"
+#include "signals.hpp"
+
 
 int main( int argc, char ** argv )
 {
 	QGuiApplication app( argc, argv );
 	QQmlApplicationEngine engine;
 	Chess::Board board;
+	Chess::Signals sigs;
 
 	engine.rootContext()->setContextProperty( "chessBoard", &board );
+	engine.rootContext()->setContextProperty( "game", &sigs );
 
 	engine.load( QUrl( "qrc:/main.qml" ) );
 
@@ -43,7 +47,7 @@ int main( int argc, char ** argv )
 		return -1;
 
 	try {
-		Chess::Game game( engine.rootObjects().first(), board );
+		Chess::Game game( engine.rootObjects().first(), board, sigs );
 
 		return app.exec();
 	}

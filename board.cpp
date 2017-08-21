@@ -320,6 +320,15 @@ Board::newGame()
 
 	std::copy( &ctmp[ 0 ][ 0 ], &ctmp[ 0 ][ 0 ] +
 		sizeof( Colors ) / sizeof( Color ), &m_colors[ 0 ][ 0 ] );
+
+	std::for_each( m_figures.begin(), m_figures.end(),
+		[] ( auto & figure ) { figure->firstMoveDone( false ); } );
+}
+
+void
+Board::update()
+{
+	emit dataChanged( index( 0 ), index( 63 ) );
 }
 
 void

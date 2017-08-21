@@ -42,6 +42,8 @@ namespace Chess {
 class Board final
 	:	public QAbstractListModel
 {
+	Q_OBJECT
+
 public:
 	Board();
 	~Board();
@@ -65,9 +67,6 @@ public:
 	//! \return Figure by index in the array.
 	Figure * figure( int index ) const;
 
-	//! New game.
-	void newGame();
-
 	//! Make move.
 	void move( int fromX, int fromY, int toX, int toY );
 
@@ -88,6 +87,12 @@ public:
 	QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const
 		Q_DECL_OVERRIDE;
 	QHash< int, QByteArray > roleNames() const Q_DECL_OVERRIDE;
+
+public slots:
+	//! New game.
+	void newGame();
+	//! Update.
+	void update();
 
 private:
 	//! Init figures.

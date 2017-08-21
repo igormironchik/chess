@@ -29,6 +29,7 @@
 
 // Chess include.
 #include "board.hpp"
+#include "signals.hpp"
 
 // C++ include.
 #include <stdexcept>
@@ -61,7 +62,7 @@ class Game final
 	Q_OBJECT
 
 public:
-	Game( QObject * root, Board & board );
+	Game( QObject * root, Board & board, Signals & s );
 	~Game();
 
 private slots:
@@ -69,6 +70,8 @@ private slots:
 	void clicked( int x, int y );
 	//! Hovered.
 	void hovered( int x, int y );
+	//! New game.
+	void newGame();
 
 private:
 	//! Mark cells for move.
@@ -96,9 +99,9 @@ private:
 	bool isCheckAfterMove( int x, int y,
 		Figure * figure, Board & tmpBoard ) const;
 	//! Check checkmate.
-	void checkCheckMate();
+	bool isCheckMate();
 	//! Check stalemate.
-	void checkStaleMate();
+	bool isStaleMate();
 
 private:
 	//! Board.
@@ -119,6 +122,8 @@ private:
 	QVector< int > m_possibleMoves;
 	//! Is chess?
 	bool m_isChess;
+	//! Signals.
+	Signals & m_signals;
 }; // class Game
 
 } /* namespace Chess */

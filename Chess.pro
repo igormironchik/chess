@@ -15,6 +15,7 @@ SOURCES =	main.cpp \
 			
 HEADERS =	figures.hpp \
 			board.hpp \
-			game.hpp
+			game.hpp \
+			signals.hpp
 
 RESOURCES = resources.qrc
