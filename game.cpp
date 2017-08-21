@@ -169,6 +169,40 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 				m_possibleMoves.append( x * 10 + y );
 			}
 		}
+
+		// Take on the pass.
+		if( figure->type() == Figure::PawnFigure )
+		{
+			int tmpY = y;
+
+			switch( figure->color() )
+			{
+				case Figure::White :
+				{
+					y += 1;
+				}
+					break;
+
+				case Figure::Black :
+				{
+					y -= 1;
+				}
+					break;
+
+				default :
+					break;
+			}
+
+			Pawn * p = dynamic_cast< Pawn* > ( m_board.figures()[ y ][ x ] );
+
+			if( p && p->isPass() &&
+				!isCheckAfterMove( x, tmpY, figure, tmpBoard ) )
+			{
+				m_board.markRed( x, tmpY );
+
+				m_possibleMoves.append( x * 10 + tmpY );
+			}
+		}
 	}
 }
 
@@ -273,6 +307,10 @@ Game::secondClick( int x, int y )
 		m_selected->firstMoveDone();
 		m_possibleMoves.clear();
 
+		if( m_selected->type() == Figure::PawnFigure &&
+			qAbs( y - m_selectedY ) == 2 )
+				static_cast< Pawn* > ( m_selected )->setPass( true );
+
 		markTurnLabel();
 
 		if( checkCheck() && isCheckMate() )
@@ -284,6 +322,42 @@ Game::secondClick( int x, int y )
 			m_selectedY = -1;
 
 			emit m_signals.checkmate();
+		}
+
+		Figure::Color c = ( m_selected->color() == Figure::White ?
+			Figure::Black : Figure::White );
+
+		switch( c )
+		{
+			case Figure::Black :
+			{
+				for( int x = 0; x < 8; ++x )
+				{
+					if( m_board.figures()[ 3 ][ x ] &&
+						m_board.figures()[ 3 ][ x ]->type() == Figure::PawnFigure &&
+						m_board.figures()[ 3 ][ x ]->color() == c )
+					{
+						static_cast< Pawn* >( m_board.figures()[ 3 ][ x ] )->
+							setPass( false );
+					}
+				}
+			}
+				break;
+
+			case Figure::White :
+			{
+				for( int x = 0; x < 8; ++x )
+				{
+					if( m_board.figures()[ 4 ][ x ] &&
+						m_board.figures()[ 4 ][ x ]->type() == Figure::PawnFigure &&
+						m_board.figures()[ 4 ][ x ]->color() == c )
+					{
+						static_cast< Pawn* >( m_board.figures()[ 4 ][ x ] )->
+							setPass( false );
+					}
+				}
+			}
+				break;
 		}
 
 		m_selected = 0;
@@ -651,6 +725,37 @@ Game::isCheckMate()
 
 							if( !isCheckAfterMove( x, y, tmpFigure, tmpBoard ) )
 								return false;
+
+							// Take on the pass.
+							if( tmpFigure->type() == Figure::PawnFigure )
+							{
+								int tmpY = y;
+
+								switch( tmpFigure->color() )
+								{
+									case Figure::White :
+									{
+										y += 1;
+									}
+										break;
+
+									case Figure::Black :
+									{
+										y -= 1;
+									}
+										break;
+
+									default :
+										break;
+								}
+
+								Pawn * p = dynamic_cast< Pawn* > (
+									tmpBoard.figures()[ y ][ x ] );
+
+								if( p && p->isPass() &&
+									!isCheckAfterMove( x, tmpY, tmpFigure, tmpBoard ) )
+										return false;
+							}
 						}
 					}
 				}

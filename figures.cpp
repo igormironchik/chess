@@ -132,11 +132,24 @@ Figure::firstMoveDone( bool done )
 
 Pawn::Pawn( int xv, int yv, Color c, const QString & n, int index )
 	:	Figure( xv, yv, c, n, index )
+	,	m_isPass( false )
 {
 }
 
 Pawn::~Pawn()
 {
+}
+
+bool
+Pawn::isPass() const
+{
+	return m_isPass;
+}
+
+void
+Pawn::setPass( bool on )
+{
+	m_isPass = on;
 }
 
 const Pawn::Moves &

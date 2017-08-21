@@ -88,6 +88,12 @@ Board::copyState( const Board & other )
 
 				f->setX( o->x() );
 				f->setY( o->y() );
+
+				if( f->type() == Figure::PawnFigure )
+				{
+					static_cast< Pawn* > ( f )->setPass(
+						static_cast< Pawn* > ( o )->isPass() );
+				}
 			}
 			else
 				m_board[ i ][ j ] = nullptr;
@@ -220,6 +226,9 @@ Board::newGame()
 	m_figures.at( 15 )->setX( 7 );
 	m_figures.at( 15 )->setY( 1 );
 
+	for( int i = 8; i < 16; ++i )
+		static_cast< Pawn* > ( m_figures.at( i ).data() )->setPass( false );
+
 	m_figures.at( 16 )->setX( 0 );
 	m_figures.at( 16 )->setY( 7 );
 	m_figures.at( 17 )->setX( 1 );
@@ -253,6 +262,9 @@ Board::newGame()
 	m_figures.at( 30 )->setY( 6 );
 	m_figures.at( 31 )->setX( 7 );
 	m_figures.at( 31 )->setY( 6 );
+
+	for( int i = 24; i < 32; ++i )
+		static_cast< Pawn* > ( m_figures.at( i ).data() )->setPass( false );
 
 	FiguresOnBoard tmp = {
 		{
@@ -347,6 +359,41 @@ Board::move( int fromX, int fromY, int toX, int toY )
 
 	emit dataChanged( fromIndex, fromIndex );
 	emit dataChanged( toIndex, toIndex );
+
+	// Take on the pass.
+	if( from->type() == Figure::PawnFigure )
+	{
+		Pawn * p = static_cast< Pawn* > ( from );
+
+		switch( p->color() )
+		{
+			case Figure::White :
+				toY += 1;
+				break;
+
+			case Figure::Black :
+				toY -= 1;
+				break;
+
+			default :
+				break;
+		}
+
+		if( m_board[ toY ][ toX ] &&
+			m_board[ toY ][ toX ]->type() == Figure::PawnFigure )
+		{
+			Pawn * killed = static_cast< Pawn* > ( m_board[ toY ][ toX ] );
+
+			if( killed && killed->isPass() )
+			{
+				m_board[ toY ][ toX ] = nullptr;
+
+				const QModelIndex toIndex = index( toY * 8 + toX, 0 );
+
+				emit dataChanged( toIndex, toIndex );
+			}
+		}
+	}
 }
 
 int

@@ -167,8 +167,15 @@ public:
 	//! \return Type of figure.
 	FigureType type() const;
 
+	//! Is pass?
+	bool isPass() const;
+	//! Set pass.
+	void setPass( bool on = true );
+
 private:
 	static const Moves m_moves;
+	//! Is aisle?
+	bool m_isPass;
 }; // class Pawn
 
 
