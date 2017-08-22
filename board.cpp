@@ -489,6 +489,9 @@ Board::data( const QModelIndex & index, int role ) const
 		case RedPieceColorRole :
 			return ( m_colors[ r ][ c ] == Red ? true : false );
 
+		case CheckPieceColorRole :
+			return ( m_colors[ r ][ c ] == Check ? true : false );
+
 		default :
 			break;
 	}
@@ -505,6 +508,7 @@ Board::roleNames() const
 	names[ CurrentPieceColorRole ] = "CurrentPieceColor";
 	names[ BluePieceColorRole ] = "BluePieceColor";
 	names[ RedPieceColorRole ] = "RedPieceColor";
+	names[ CheckPieceColorRole ] = "CheckPieceColor";
 
 	return names;
 }
@@ -530,7 +534,17 @@ Board::markRed( int x, int y )
 }
 
 void
-Board::clearBlueRed()
+Board::markCheck( int x, int y )
+{
+	m_colors[ y ][ x ] = Check;
+
+	const QModelIndex idx = index( y * 8 + x, 0 );
+
+	emit dataChanged( idx, idx );
+}
+
+void
+Board::clearColors()
 {
 	Colors ctmp = {
 		{ None, None, None, None, None, None, None, None },

@@ -209,7 +209,7 @@ Game::markCellForHit( int x, int y, int dx, int dy, Move::Distance d,
 void
 Game::clearCellsColor()
 {
-	m_board.clearBlueRed();
+	m_board.clearColors();
 }
 
 void
@@ -505,7 +505,7 @@ Game::markCheck( King * king, Figure * figure )
 							m_isChess = true;
 
 							for( auto & p : qAsConst( turns ) )
-								m_board.markRed( p.first, p.second );
+								m_board.markCheck( p.first, p.second );
 
 							return true;
 						}
@@ -527,7 +527,7 @@ Game::markCheck( King * king, Figure * figure )
 						m_isChess = true;
 
 						for( auto & p : qAsConst( turns ) )
-							m_board.markRed( p.first, p.second );
+							m_board.markCheck( p.first, p.second );
 
 						return true;
 					}

@@ -28,6 +28,7 @@ Item {
     property alias cellColor: rectangle.color
     property alias blueProp: blue.visible
     property alias redProp: red.visible
+    property alias checkProp: check.visible
     property int chessX
     property int chessY
 
@@ -37,6 +38,13 @@ Item {
     Rectangle {
         id: rectangle
         anchors.fill: parent
+    }
+
+    Rectangle {
+        id: check
+        visible: false
+        anchors.fill: parent
+        color: "#25FF0000"
     }
 
     Rectangle {

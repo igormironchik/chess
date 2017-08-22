@@ -55,7 +55,8 @@ public:
 		CellImageSourceRole = Qt::UserRole,
 		CurrentPieceColorRole = CellImageSourceRole + 1,
 		BluePieceColorRole = CurrentPieceColorRole + 1,
-		RedPieceColorRole = BluePieceColorRole + 1
+		RedPieceColorRole = BluePieceColorRole + 1,
+		CheckPieceColorRole = RedPieceColorRole + 1
 	}; // enum RoleNames
 
 	//! Figures on board.
@@ -74,8 +75,10 @@ public:
 	void markBlue( int x, int y );
 	//! Mark red.
 	void markRed( int x, int y );
+	//! Mark check.
+	void markCheck( int x, int y );
 	//! Clear blue|red.
-	void clearBlueRed();
+	void clearColors();
 
 	//! \return White king.
 	King * whiteKing() const;
@@ -113,6 +116,7 @@ private:
 	enum Color {
 		Blue,
 		Red,
+		Check,
 		None
 	}; // enum Color
 

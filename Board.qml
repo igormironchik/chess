@@ -97,6 +97,7 @@ Rectangle {
                 source: model.CellImageSource
                 blueProp: model.BluePieceColor
                 redProp: model.RedPieceColor
+                checkProp: model.CheckPieceColor
             }
         }
     }
