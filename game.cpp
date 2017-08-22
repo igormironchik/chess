@@ -315,6 +315,8 @@ Game::secondClick( int x, int y )
 
 		if( checkCheck() && isCheckMate() )
 		{
+			checkCheck( true );
+
 			m_turnColor = Figure::White;
 			m_isChess = false;
 			m_possibleMoves.clear();
@@ -440,7 +442,7 @@ Game::handleCastling( int x, int y,
 }
 
 bool
-Game::checkCheck()
+Game::checkCheck( bool checkmate )
 {
 	King * king = ( m_turnColor == Figure::Black ? m_board.blackKing() :
 		m_board.whiteKing() );
@@ -456,8 +458,9 @@ Game::checkCheck()
 		{
 			if( m_board.figures()[ y ][ x ] &&
 				m_board.figures()[ y ][ x ]->color() != m_turnColor )
-					if( markCheck( king, m_board.figures()[ y ][ x ] ) )
-						res = true;
+					if( markCheck( king, m_board.figures()[ y ][ x ],
+						checkmate ) )
+							res = true;
 		}
 	}
 
@@ -465,7 +468,7 @@ Game::checkCheck()
 }
 
 bool
-Game::markCheck( King * king, Figure * figure )
+Game::markCheck( King * king, Figure * figure, bool checkmate )
 {
 	// For each possible move.
 	for( int i = 0; i < 5; ++i )
@@ -505,7 +508,12 @@ Game::markCheck( King * king, Figure * figure )
 							m_isChess = true;
 
 							for( auto & p : qAsConst( turns ) )
-								m_board.markCheck( p.first, p.second );
+							{
+								if( !checkmate )
+									m_board.markCheck( p.first, p.second );
+								else
+									m_board.markRed( p.first, p.second );
+							}
 
 							return true;
 						}
@@ -527,7 +535,12 @@ Game::markCheck( King * king, Figure * figure )
 						m_isChess = true;
 
 						for( auto & p : qAsConst( turns ) )
-							m_board.markCheck( p.first, p.second );
+						{
+							if( !checkmate )
+								m_board.markCheck( p.first, p.second );
+							else
+								m_board.markRed( p.first, p.second );
+						}
 
 						return true;
 					}

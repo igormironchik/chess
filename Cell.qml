@@ -44,7 +44,7 @@ Item {
         id: check
         visible: false
         anchors.fill: parent
-        color: "#25FF0000"
+        color: "#88FFFF00"
     }
 
     Rectangle {

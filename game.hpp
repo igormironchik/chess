@@ -92,9 +92,9 @@ private:
 	void handleCastling( int x, int y,
 		Figure * figure, Board & board ) const;
 	//! Check check.
-	bool checkCheck();
+	bool checkCheck( bool checkmate = false );
 	//! Mark check.
-	bool markCheck( King * king, Figure * figure );
+	bool markCheck( King * king, Figure * figure, bool checkmate = false );
 	//! Will be a check after move?
 	bool isCheckAfterMove( int x, int y,
 		Figure * figure, Board & tmpBoard ) const;
