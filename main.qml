@@ -61,7 +61,7 @@ ApplicationWindow {
     }
 
     Dialog {
-        id: dlg
+        id: checkmate
         title: qsTr( "Checkmate..." )
         standardButtons: Dialog.Ok
         modal: true
@@ -81,10 +81,35 @@ ApplicationWindow {
         onClosed: { board.newGame() }
     }
 
+    Dialog {
+        id: drawgame
+        title: qsTr( "Draw Game..." )
+        standardButtons: Dialog.Ok
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        x: appWindow.width / 2 - width / 2
+        y: appWindow.height / 2 - height / 2
+
+        Text {
+            anchors.centerIn: parent
+            font.pixelSize: 30
+            font.bold: true
+            text: qsTr( "Draw Game!!!" )
+        }
+
+        onClosed: { board.newGame() }
+    }
+
     Connections {
         target: game
-        onCheckmate : {
-            dlg.open()
+
+        onCheckmate: {
+            checkmate.open()
+        }
+
+        onDrawgame: {
+            drawgame.open()
         }
     }
 }

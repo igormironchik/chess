@@ -796,7 +796,7 @@ Game::clicked( int x, int y )
 
 		if( secondClick( x, y ) && isStaleMate() )
 		{
-
+			emit m_signals.drawgame();
 		}
 	}
 }

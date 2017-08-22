@@ -42,6 +42,8 @@ class Signals Q_DECL_FINAL
 signals:
 	//! Checkmate.
 	void checkmate();
+	//! Draw game.
+	void drawgame();
 
 public:
 	Signals()
