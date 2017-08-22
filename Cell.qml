@@ -78,6 +78,6 @@ Item {
         hoverEnabled: true
 
         onClicked: cell.clicked( chessX, chessY )
-        onEntered: cell.hovered( chessX, chessY )
+//        onEntered: cell.hovered( chessX, chessY )
     }
 }
