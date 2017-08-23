@@ -348,49 +348,52 @@ Board::move( int fromX, int fromY, int toX, int toY )
 {
 	Figure * from = m_board[ fromY ][ fromX ];
 
-	m_board[ fromY ][ fromX ] = 0;
-	m_board[ toY ][ toX ] = from;
-
-	from->setX( toX );
-	from->setY( toY );
-
-	const QModelIndex fromIndex = index( fromY * 8 + fromX, 0 );
-	const QModelIndex toIndex = index( toY * 8 + toX, 0 );
-
-	emit dataChanged( fromIndex, fromIndex );
-	emit dataChanged( toIndex, toIndex );
-
-	// Take on the pass.
-	if( from->type() == Figure::PawnFigure )
+	if( from )
 	{
-		Pawn * p = static_cast< Pawn* > ( from );
+		m_board[ fromY ][ fromX ] = 0;
+		m_board[ toY ][ toX ] = from;
 
-		switch( p->color() )
+		from->setX( toX );
+		from->setY( toY );
+
+		const QModelIndex fromIndex = index( fromY * 8 + fromX, 0 );
+		const QModelIndex toIndex = index( toY * 8 + toX, 0 );
+
+		emit dataChanged( fromIndex, fromIndex );
+		emit dataChanged( toIndex, toIndex );
+
+		// Take on the pass.
+		if( from->type() == Figure::PawnFigure )
 		{
-			case Figure::White :
-				toY += 1;
-				break;
+			Pawn * p = static_cast< Pawn* > ( from );
 
-			case Figure::Black :
-				toY -= 1;
-				break;
-
-			default :
-				break;
-		}
-
-		if( m_board[ toY ][ toX ] &&
-			m_board[ toY ][ toX ]->type() == Figure::PawnFigure )
-		{
-			Pawn * killed = static_cast< Pawn* > ( m_board[ toY ][ toX ] );
-
-			if( killed && killed->isPass() )
+			switch( p->color() )
 			{
-				m_board[ toY ][ toX ] = nullptr;
+				case Figure::White :
+					toY += 1;
+					break;
 
-				const QModelIndex toIndex = index( toY * 8 + toX, 0 );
+				case Figure::Black :
+					toY -= 1;
+					break;
 
-				emit dataChanged( toIndex, toIndex );
+				default :
+					break;
+			}
+
+			if( m_board[ toY ][ toX ] &&
+				m_board[ toY ][ toX ]->type() == Figure::PawnFigure )
+			{
+				Pawn * killed = static_cast< Pawn* > ( m_board[ toY ][ toX ] );
+
+				if( killed && killed->isPass() )
+				{
+					m_board[ toY ][ toX ] = nullptr;
+
+					const QModelIndex toIndex = index( toY * 8 + toX, 0 );
+
+					emit dataChanged( toIndex, toIndex );
+				}
 			}
 		}
 	}

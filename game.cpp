@@ -782,7 +782,7 @@ Game::isCheckMate()
 bool
 Game::isStaleMate()
 {
-	return false;
+	return isCheckMate();
 }
 
 void
