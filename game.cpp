@@ -28,8 +28,6 @@
 #include <QString>
 #include <QMetaObject>
 
-#include <QDebug>
-
 
 namespace Chess {
 
@@ -310,8 +308,6 @@ Game::secondClick( int x, int y )
 
 		m_selected->firstMoveDone();
 		m_possibleMoves.clear();
-
-		qDebug() << m_selected->name() << m_selected->x() << m_selected->y();
 
 		if( m_selected->type() == Figure::PawnFigure &&
 			qAbs( y - m_selectedY ) == 2 )
