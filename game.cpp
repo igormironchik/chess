@@ -115,6 +115,7 @@ Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 				break;
 		}
 	}
+	// Only one cell move.
 	else if( x >= 0 && x < 8 && y >= 0 && y < 8 )
 	{
 		if( !m_board.figures()[ y ][ x ] )
@@ -309,6 +310,7 @@ Game::secondClick( int x, int y )
 		m_selected->firstMoveDone();
 		m_possibleMoves.clear();
 
+		// Pass by pawn.
 		if( m_selected->type() == Figure::PawnFigure &&
 			qAbs( y - m_selectedY ) == 2 )
 				static_cast< Pawn* > ( m_selected )->setPass( true );
@@ -331,6 +333,7 @@ Game::secondClick( int x, int y )
 			}
 		}
 
+		// Clear pass by pawn flag.
 		Figure::Color c = ( m_selected->color() == Figure::White ?
 			Figure::Black : Figure::White );
 
