@@ -75,6 +75,9 @@ Board::operator = ( const Board & other )
 void
 Board::copyState( const Board & other )
 {
+	for( const auto & o : qAsConst( other.m_transformed ) )
+		m_transformed.append( o->copy() );
+
 	for( int i = 0; i < 8; ++i )
 	{
 		for( int j = 0; j < 8; ++j )
@@ -82,7 +85,9 @@ Board::copyState( const Board & other )
 			if( other.m_board[ i ][ j ] )
 			{
 				Figure * o = other.m_board[ i ][ j ];
-				Figure * f = m_figures.at( o->index() ).data();
+				Figure * f = ( o->index() < 32 ?
+					m_figures.at( o->index() ).data() :
+					m_transformed.at( o->index() - 32 ).data() );
 
 				m_board[ i ][ j ] = f;
 
@@ -186,12 +191,15 @@ Board::figures()
 Figure *
 Board::figure( int index ) const
 {
-	return m_figures.at( index ).data();
+	return ( index < 32 ? m_figures.at( index ).data() :
+		m_transformed.at( index - 32 ).data() );
 }
 
 void
 Board::newGame()
 {
+	m_transformed.clear();
+
 	m_figures.at( 0 )->setX( 0 );
 	m_figures.at( 0 )->setY( 0 );
 	m_figures.at( 1 )->setX( 1 );
@@ -579,6 +587,73 @@ King *
 Board::blackKing() const
 {
 	return m_blackKing;
+}
+
+void
+Board::transformation( Chess::Signals::TransformationFigure figure,
+	Chess::Signals::Color c, int x, int y )
+{
+	switch( figure )
+	{
+		case Signals::Queen :
+		{
+			m_transformed.append( QSharedPointer< Figure> ( new Queen( x, y,
+				( c == Signals::White ? Figure::White : Figure::Black ),
+				QLatin1String( "queen" ), 32 + m_transformed.size() ) ) );
+
+			m_board[ y ][ x ] = m_transformed.last().data();
+
+			const QModelIndex idx = index( y * 8 + x, 0 );
+
+			emit dataChanged( idx, idx );
+		}
+			break;
+
+		case Signals::Castle :
+		{
+			m_transformed.append( QSharedPointer< Figure> ( new Castle( x, y,
+				( c == Signals::White ? Figure::White : Figure::Black ),
+				QLatin1String( "queen" ), 32 + m_transformed.size() ) ) );
+
+			m_board[ y ][ x ] = m_transformed.last().data();
+
+			const QModelIndex idx = index( y * 8 + x, 0 );
+
+			emit dataChanged( idx, idx );
+		}
+			break;
+
+		case Signals::Knight :
+		{
+			m_transformed.append( QSharedPointer< Figure> ( new Knight( x, y,
+				( c == Signals::White ? Figure::White : Figure::Black ),
+				QLatin1String( "queen" ), 32 + m_transformed.size() ) ) );
+
+			m_board[ y ][ x ] = m_transformed.last().data();
+
+			const QModelIndex idx = index( y * 8 + x, 0 );
+
+			emit dataChanged( idx, idx );
+		}
+			break;
+
+		case Signals::Bishop :
+		{
+			m_transformed.append( QSharedPointer< Figure> ( new Bishop( x, y,
+				( c == Signals::White ? Figure::White : Figure::Black ),
+				QLatin1String( "queen" ), 32 + m_transformed.size() ) ) );
+
+			m_board[ y ][ x ] = m_transformed.last().data();
+
+			const QModelIndex idx = index( y * 8 + x, 0 );
+
+			emit dataChanged( idx, idx );
+		}
+			break;
+
+		default :
+			break;
+	}
 }
 
 } /* namespace Chess */

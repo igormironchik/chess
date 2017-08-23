@@ -26,6 +26,7 @@
 // Qt include.
 #include <QFlags>
 #include <QString>
+#include <QSharedPointer>
 
 // C++ include.
 #include <array>
@@ -38,7 +39,7 @@ namespace Chess {
 //
 
 //! Move.
-class Move final {
+class Move Q_DECL_FINAL {
 public:
 	//! Type of movement.
 	enum Type {
@@ -133,6 +134,9 @@ public:
 	//! Mark figure as did first move.
 	void firstMoveDone( bool done = true );
 
+	//! Copy.
+	virtual QSharedPointer< Figure > copy() const = 0;
+
 private:
 	//! X.
 	int m_x;
@@ -154,7 +158,7 @@ private:
 //
 
 //! Pawn.
-class Pawn final
+class Pawn Q_DECL_FINAL
 	:	public Figure
 {
 public:
@@ -172,6 +176,9 @@ public:
 	//! Set pass.
 	void setPass( bool on = true );
 
+	//! Copy.
+	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
+
 private:
 	static const Moves m_moves;
 	//! Is aisle?
@@ -184,7 +191,7 @@ private:
 //
 
 //! Castle.
-class Castle final
+class Castle Q_DECL_FINAL
 	:	public Figure
 {
 public:
@@ -197,6 +204,9 @@ public:
 	//! \return Type of figure.
 	FigureType type() const;
 
+	//! Copy.
+	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
+
 private:
 	static const Moves m_moves;
 }; // class Castle
@@ -207,7 +217,7 @@ private:
 //
 
 //! Knight.
-class Knight final
+class Knight Q_DECL_FINAL
 	:	public Figure
 {
 public:
@@ -220,6 +230,9 @@ public:
 	//! \return Type of figure.
 	FigureType type() const;
 
+	//! Copy.
+	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
+
 private:
 	static const Moves m_moves;
 }; // class Knight
@@ -230,7 +243,7 @@ private:
 //
 
 //! Bishop.
-class Bishop final
+class Bishop Q_DECL_FINAL
 	:	public Figure
 {
 public:
@@ -243,6 +256,9 @@ public:
 	//! \return Type of figure.
 	FigureType type() const;
 
+	//! Copy.
+	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
+
 private:
 	static const Moves m_moves;
 }; // class
@@ -253,7 +269,7 @@ private:
 //
 
 //! Queen.
-class Queen final
+class Queen Q_DECL_FINAL
 	:	public Figure
 {
 public:
@@ -266,6 +282,9 @@ public:
 	//! \return Type of figure.
 	FigureType type() const;
 
+	//! Copy.
+	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
+
 private:
 	static const Moves m_moves;
 }; // class Queen
@@ -276,7 +295,7 @@ private:
 //
 
 //! King.
-class King final
+class King Q_DECL_FINAL
 	:	public Figure
 {
 public:
@@ -288,6 +307,9 @@ public:
 
 	//! \return Type of figure.
 	FigureType type() const;
+
+	//! Copy.
+	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
 
 private:
 	static const Moves m_moves;

@@ -34,16 +34,38 @@ namespace Chess {
 //
 
 //! Signals.
-class Signals Q_DECL_FINAL
+class Signals
 	:	public QObject
 {
 	Q_OBJECT
+
+public:
+	//! Color.
+	enum Color {
+		//! White.
+		White = 0,
+		//! Black.
+		Black = 1
+	}; // enum Color
+
+	Q_ENUM( Color )
+
+	enum TransformationFigure {
+		Queen = 0,
+		Castle = 1,
+		Knight = 2,
+		Bishop = 3
+	}; // enum TransformationFigure
+
+	Q_ENUM( TransformationFigure )
 
 signals:
 	//! Checkmate.
 	void checkmate();
 	//! Draw game.
 	void drawgame();
+	//! Transformation.
+	void pawnTransformation( int color, int fx, int fy );
 
 public:
 	Signals()

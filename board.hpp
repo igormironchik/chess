@@ -25,6 +25,7 @@
 
 // Chess include.
 #include "figures.hpp"
+#include "signals.hpp"
 
 // Qt include.
 #include <QList>
@@ -39,7 +40,7 @@ namespace Chess {
 //
 
 //! Board.
-class Board final
+class Board Q_DECL_FINAL
 	:	public QAbstractListModel
 {
 	Q_OBJECT
@@ -96,6 +97,9 @@ public slots:
 	void newGame();
 	//! Update.
 	void update();
+	//! Transformation.
+	void transformation( Chess::Signals::TransformationFigure figure,
+		Chess::Signals::Color c, int x, int y );
 
 private:
 	//! Init figures.
@@ -108,6 +112,8 @@ private:
 	FiguresOnBoard m_board;
 	//! Figures.
 	QList< QSharedPointer< Figure > > m_figures;
+	//! Transformed figures.
+	QList< QSharedPointer< Figure > > m_transformed;
 	//! White king.
 	King * m_whiteKing;
 	//! Black king.

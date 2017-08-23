@@ -34,9 +34,12 @@
 int main( int argc, char ** argv )
 {
 	QGuiApplication app( argc, argv );
+
 	QQmlApplicationEngine engine;
 	Chess::Board board;
 	Chess::Signals sigs;
+
+	qmlRegisterType< Chess::Signals > ( "ChessSignals", 1, 0, "Chess" );
 
 	engine.rootContext()->setContextProperty( "chessBoard", &board );
 	engine.rootContext()->setContextProperty( "game", &sigs );

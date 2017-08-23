@@ -42,7 +42,7 @@ namespace Chess {
 //
 
 //! Error.
-class Error
+class Error Q_DECL_FINAL
 	:	public std::runtime_error
 {
 public:
@@ -56,7 +56,7 @@ public:
 //
 
 //! Game.
-class Game final
+class Game Q_DECL_FINAL
 	:	public QObject
 {
 	Q_OBJECT
@@ -72,6 +72,8 @@ private slots:
 	void hovered( int x, int y );
 	//! New game.
 	void newGame();
+	//! Transformation.
+	void transformation( int figure, int c, int x, int y );
 
 private:
 	//! Mark cells for move.
@@ -102,6 +104,8 @@ private:
 	bool isCheckMate();
 	//! Check stalemate.
 	bool isStaleMate();
+	//! Handle transformation.
+	bool handleTransformation();
 
 private:
 	//! Board.

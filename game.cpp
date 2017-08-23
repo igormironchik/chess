@@ -71,6 +71,8 @@ Game::Game( QObject * root, Board & board, Signals & s )
 		this, SLOT( hovered( int, int ) ) );
 	connect( m_boardObject, SIGNAL( newGame() ),
 		this, SLOT( newGame() ) );
+	connect( m_boardObject, SIGNAL( transformation( int, int, int, int ) ),
+		this, SLOT( transformation( int, int, int, int ) ) );
 }
 
 Game::~Game()
@@ -313,17 +315,20 @@ Game::secondClick( int x, int y )
 
 		markTurnLabel();
 
-		if( checkCheck() && isCheckMate() )
+		if( !handleTransformation() )
 		{
-			checkCheck( true );
+			if( checkCheck() && isCheckMate() )
+			{
+				checkCheck( true );
 
-			m_turnColor = Figure::White;
-			m_isChess = false;
-			m_possibleMoves.clear();
-			m_selectedX = -1;
-			m_selectedY = -1;
+				m_turnColor = Figure::White;
+				m_isChess = false;
+				m_possibleMoves.clear();
+				m_selectedX = -1;
+				m_selectedY = -1;
 
-			emit m_signals.checkmate();
+				emit m_signals.checkmate();
+			}
 		}
 
 		Figure::Color c = ( m_selected->color() == Figure::White ?
@@ -814,6 +819,64 @@ Game::clicked( int x, int y )
 		{
 			emit m_signals.drawgame();
 		}
+	}
+}
+
+bool
+Game::handleTransformation()
+{
+	if( m_selected->type() == Figure::PawnFigure )
+	{
+		switch( m_selected->color() )
+		{
+			case Figure::White :
+			{
+				if( m_selected->y() == 0 )
+				{
+					emit m_signals.pawnTransformation( Signals::White,
+						m_selected->x(), m_selected->y() );
+
+					return true;
+				}
+			}
+				break;
+
+			case Figure::Black :
+			{
+				if( m_selected->y() == 7 )
+					emit m_signals.pawnTransformation( Signals::Black,
+						m_selected->x(), m_selected->y() );
+
+				return true;
+			}
+				break;
+
+			default :
+				break;
+		}
+	}
+
+	return false;
+}
+
+void
+Game::transformation( int figure, int c, int x, int y )
+{
+	m_board.transformation(
+		static_cast< Signals::TransformationFigure > ( figure ),
+		static_cast< Signals::Color > ( c ), x, y );
+
+	if( checkCheck() && isCheckMate() )
+	{
+		checkCheck( true );
+
+		m_turnColor = Figure::White;
+		m_isChess = false;
+		m_possibleMoves.clear();
+		m_selectedX = -1;
+		m_selectedY = -1;
+
+		emit m_signals.checkmate();
 	}
 }
 

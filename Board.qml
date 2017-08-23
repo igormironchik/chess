@@ -32,6 +32,7 @@ Rectangle {
     signal clicked( int x, int y )
     signal hovered( int x, int y )
     signal newGame()
+    signal transformation( int figure, int color, int x, int y );
 
     Row {
         id: top

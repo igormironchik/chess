@@ -164,6 +164,17 @@ Pawn::type() const
 	return PawnFigure;
 }
 
+QSharedPointer< Figure >
+Pawn::copy() const
+{
+	QSharedPointer< Figure > res( new Pawn( x(), y(), color(),
+		name(), index() ) );
+	res->firstMoveDone( isFirstMoveDone() );
+	static_cast< Pawn* > ( res.data() )->m_isPass = m_isPass;
+
+	return res;
+}
+
 const Pawn::Moves Pawn::m_moves = {
 	std::array< Move, 5 > { Move{ Move::Unknown, Move::No },
 		Move{ Move::Unknown, Move::No },
@@ -214,6 +225,16 @@ Castle::FigureType
 Castle::type() const
 {
 	return CastleFigure;
+}
+
+QSharedPointer< Figure >
+Castle::copy() const
+{
+	QSharedPointer< Figure > res( new Castle( x(), y(), color(),
+		name(), index() ) );
+	res->firstMoveDone( isFirstMoveDone() );
+
+	return res;
 }
 
 const Castle::Moves Castle::m_moves = {
@@ -272,6 +293,16 @@ Knight::type() const
 	return KnightFigure;
 }
 
+QSharedPointer< Figure >
+Knight::copy() const
+{
+	QSharedPointer< Figure > res( new Knight( x(), y(), color(),
+		name(), index() ) );
+	res->firstMoveDone( isFirstMoveDone() );
+
+	return res;
+}
+
 const Knight::Moves Knight::m_moves = {
 	std::array< Move, 5 >{ Move{ Move::Unknown, Move::No },
 		Move{ Move::Movement | Move::Hit, Move::One },
@@ -325,6 +356,16 @@ Bishop::FigureType
 Bishop::type() const
 {
 	return BishopFigure;
+}
+
+QSharedPointer< Figure >
+Bishop::copy() const
+{
+	QSharedPointer< Figure > res( new Bishop( x(), y(), color(),
+		name(), index() ) );
+	res->firstMoveDone( isFirstMoveDone() );
+
+	return res;
 }
 
 const Bishop::Moves Bishop::m_moves = {
@@ -382,6 +423,16 @@ Queen::type() const
 	return QueenFigure;
 }
 
+QSharedPointer< Figure >
+Queen::copy() const
+{
+	QSharedPointer< Figure > res( new Queen( x(), y(), color(),
+		name(), index() ) );
+	res->firstMoveDone( isFirstMoveDone() );
+
+	return res;
+}
+
 const Queen::Moves Queen::m_moves = {
 	std::array< Move, 5 >{ Move{ Move::Unknown, Move::No },
 		Move{ Move::Unknown, Move::No },
@@ -435,6 +486,16 @@ King::FigureType
 King::type() const
 {
 	return KingFigure;
+}
+
+QSharedPointer< Figure >
+King::copy() const
+{
+	QSharedPointer< Figure > res( new King( x(), y(), color(),
+		name(), index() ) );
+	res->firstMoveDone( isFirstMoveDone() );
+
+	return res;
 }
 
 const King::Moves King::m_moves = {
