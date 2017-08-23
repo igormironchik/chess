@@ -495,6 +495,9 @@ Board::data( const QModelIndex & index, int role ) const
 					QColor( Qt::lightGray ) ) :
 				( c % 2 == 0 ? QColor( Qt::lightGray ) : QColor( Qt::white ) ) );
 
+		case BorderColorRole :
+			return QColor( Qt::lightGray );
+
 		case BluePieceColorRole :
 			return ( m_colors[ r ][ c ] == Blue ? true : false );
 
@@ -521,6 +524,7 @@ Board::roleNames() const
 	names[ BluePieceColorRole ] = "BluePieceColor";
 	names[ RedPieceColorRole ] = "RedPieceColor";
 	names[ CheckPieceColorRole ] = "CheckPieceColor";
+	names[ BorderColorRole ] = "BorderColor";
 
 	return names;
 }

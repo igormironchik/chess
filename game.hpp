@@ -128,6 +128,8 @@ private:
 	bool m_isChess;
 	//! Signals.
 	Signals & m_signals;
+	//! Checkmate flag.
+	bool m_checkmate;
 }; // class Game
 
 } /* namespace Chess */

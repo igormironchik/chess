@@ -57,7 +57,8 @@ public:
 		CurrentPieceColorRole = CellImageSourceRole + 1,
 		BluePieceColorRole = CurrentPieceColorRole + 1,
 		RedPieceColorRole = BluePieceColorRole + 1,
-		CheckPieceColorRole = RedPieceColorRole + 1
+		CheckPieceColorRole = RedPieceColorRole + 1,
+		BorderColorRole = CheckPieceColorRole + 1
 	}; // enum RoleNames
 
 	//! Figures on board.

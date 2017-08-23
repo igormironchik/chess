@@ -59,6 +59,7 @@ Game::Game( QObject * root, Board & board, Signals & s )
 	,	m_selectedY( 0 )
 	,	m_isChess( false )
 	,	m_signals( s )
+	,	m_checkmate( false )
 {
 	m_boardObject = m_root->findChild< QObject* > ( QLatin1String( "board" ) );
 
@@ -323,15 +324,17 @@ Game::secondClick( int x, int y )
 			{
 				checkCheck( true );
 
-				m_turnColor = Figure::White;
-				m_isChess = false;
-				m_possibleMoves.clear();
-				m_selectedX = -1;
-				m_selectedY = -1;
+				m_checkmate = true;
 
 				emit m_signals.checkmate();
+
+				return true;
 			}
+			else
+				emit m_signals.rotate( -1 );
 		}
+		else
+			emit m_signals.rotate( -1 );
 
 		// Clear pass by pawn flag.
 		Figure::Color c = ( m_selected->color() == Figure::White ?
@@ -821,9 +824,10 @@ Game::clicked( int x, int y )
 	{
 		clearCellsColor();
 
-		if( secondClick( x, y ) && isStaleMate() )
+		if( secondClick( x, y ) )
 		{
-			emit m_signals.drawgame();
+			if( !m_checkmate && isStaleMate() )
+				emit m_signals.drawgame();
 		}
 	}
 }
@@ -876,11 +880,7 @@ Game::transformation( int figure, int c, int x, int y )
 	{
 		checkCheck( true );
 
-		m_turnColor = Figure::White;
-		m_isChess = false;
-		m_possibleMoves.clear();
-		m_selectedX = -1;
-		m_selectedY = -1;
+		m_checkmate = true;
 
 		emit m_signals.checkmate();
 	}
@@ -898,6 +898,21 @@ Game::newGame()
 {
 	m_board.newGame();
 	m_board.update();
+
+	m_turnColor = Figure::White;
+	m_isChess = false;
+	m_possibleMoves.clear();
+	m_selectedX = -1;
+	m_selectedY = -1;
+	m_checkmate = false;
+
+	QObject * turn = m_root->findChild< QObject* > (
+		QLatin1String( "turn" ) );
+
+	if( turn )
+		turn->setProperty( "text", tr( "White" ) );
+
+	emit m_signals.rotate( 0 );
 }
 
 } /* namespace Chess */

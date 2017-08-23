@@ -20,7 +20,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.5
+import QtQuick 2.7
 
 Rectangle {
     property int offset: 16
@@ -28,6 +28,36 @@ Rectangle {
     property int cellHeight: ( height - offset * 2 ) / 8
 
     id: board
+    transform: rot
+
+    property alias rotation: rot.angle
+
+    Rotation {
+        id: rot
+        origin.x: board.width / 2
+        origin.y: board.height / 2
+        angle: 0
+    }
+
+    PropertyAnimation {
+        id: anim
+        duration: 300
+        target: board
+        from: ( rot.angle === 0 ? 0 : ( rot.angle === 360 ? 0 : 180 ) )
+        to: ( rot.angle === 0 ? 180 : ( rot.angle === 360 ? 180 : 360 ) )
+        property: "rotation"
+    }
+
+    Connections {
+        target: game
+
+        onRotate: {
+            if( angle === -1 )
+                anim.start()
+            else
+                rot.angle = 0
+        }
+    }
 
     signal clicked( int x, int y )
     signal hovered( int x, int y )
@@ -50,6 +80,11 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
                 font.pixelSize: 14
+                transform: Rotation {
+                    origin.x: width / 2
+                    origin.y: height / 2
+                    angle: rot.angle
+                }
             }
         }
         Item { width: offset; height: offset; }
@@ -70,6 +105,11 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
                 font.pixelSize: 14
+                transform: Rotation {
+                    origin.x: width / 2
+                    origin.y: height / 2
+                    angle: rot.angle
+                }
            }
         }
     }
@@ -88,10 +128,11 @@ Rectangle {
 
             delegate: Cell {
                 cellColor: model.CurrentPieceColor
+                border.color: model.BorderColor
                 chessX: index % 8
                 chessY: index / 8
                 onClicked: board.clicked( x, y )
-                onHovered: board.hovered( x, y )
+                //onHovered: board.hovered( x, y )
                 objectName: "c"+ chessX + chessY
                 width: cellWidth
                 height: cellHeight
@@ -99,6 +140,11 @@ Rectangle {
                 blueProp: model.BluePieceColor
                 redProp: model.RedPieceColor
                 checkProp: model.CheckPieceColor
+                transform: Rotation {
+                    origin.x: width / 2
+                    origin.y: height / 2
+                    angle: rot.angle
+                }
             }
         }
     }
@@ -119,6 +165,11 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
                 font.pixelSize: 14
+                transform: Rotation {
+                    origin.x: width / 2
+                    origin.y: height / 2
+                    angle: rot.angle
+                }
            }
         }
     }
@@ -140,6 +191,11 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
                 font.pixelSize: 14
+                transform: Rotation {
+                    origin.x: width / 2
+                    origin.y: height / 2
+                    angle: rot.angle
+                }
             }
         }
         Item { width: offset; height: offset; }

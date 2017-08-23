@@ -66,6 +66,8 @@ signals:
 	void drawgame();
 	//! Transformation.
 	void pawnTransformation( int color, int fx, int fy );
+	//! Rotate board.
+	void rotate( int angle );
 
 public:
 	Signals()

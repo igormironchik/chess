@@ -26,6 +26,7 @@ Item {
     id: cell
 
     property alias cellColor: rectangle.color
+    property alias border: rectangle.border
     property alias blueProp: blue.visible
     property alias redProp: red.visible
     property alias checkProp: check.visible
@@ -38,6 +39,7 @@ Item {
     Rectangle {
         id: rectangle
         anchors.fill: parent
+        border.width: 1
     }
 
     Rectangle {
