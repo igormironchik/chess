@@ -93,6 +93,7 @@ Board::copyState( const Board & other )
 
 				f->setX( o->x() );
 				f->setY( o->y() );
+				f->firstMoveDone( o->isFirstMoveDone() );
 
 				if( f->type() == Figure::PawnFigure )
 				{

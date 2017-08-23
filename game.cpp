@@ -28,6 +28,8 @@
 #include <QString>
 #include <QMetaObject>
 
+#include <QDebug>
+
 
 namespace Chess {
 
@@ -309,6 +311,8 @@ Game::secondClick( int x, int y )
 		m_selected->firstMoveDone();
 		m_possibleMoves.clear();
 
+		qDebug() << m_selected->name() << m_selected->x() << m_selected->y();
+
 		if( m_selected->type() == Figure::PawnFigure &&
 			qAbs( y - m_selectedY ) == 2 )
 				static_cast< Pawn* > ( m_selected )->setPass( true );
@@ -538,9 +542,8 @@ Game::markCheck( King * king, Figure * figure, bool checkmate )
 
 							return true;
 						}
-						else if( m_board.figures()[ y ][ x ] &&
-							m_board.figures()[ y ][ x ]->type() != Figure::KnightFigure )
-								break;
+						else if( m_board.figures()[ y ][ x ] )
+							break;
 
 						x += dx;
 						y += dy;
@@ -602,6 +605,12 @@ Game::isCheckAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 			{
 				Figure * tmpFigure = tmpBoard.figures()[ y ][ x ];
 
+				if(tmpFigure->type() == Figure::BishopFigure)
+				{
+					int z = 0;
+					z++;
+				}
+
 				// For each possible move.
 				for( int i = 0; i < 5; ++i )
 				{
@@ -636,10 +645,8 @@ Game::isCheckAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 
 										break;
 									}
-									else if( tmpBoard.figures()[ y ][ x ] &&
-										tmpBoard.figures()[ y ][ x ]->type() !=
-											Figure::KnightFigure )
-												break;
+									else if( tmpBoard.figures()[ y ][ x ] )
+										break;
 
 									x += dx;
 									y += dy;
