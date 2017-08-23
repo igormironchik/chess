@@ -420,18 +420,34 @@ Game::handleCastling( int x, int y,
 			case Figure::White :
 			{
 				if( x == 1 )
-					board.move( 0, 7, 2, 7 );
+				{
+					if( board.figures()[ 0 ][ 7 ] &&
+						!board.figures()[ 0 ][ 7 ]->isFirstMoveDone() )
+							board.move( 0, 7, 2, 7 );
+				}
 				else if( x == 6 )
-					board.move( 7, 7, 5, 7 );
+				{
+					if( board.figures()[ 7 ][ 7 ] &&
+						!board.figures()[ 7 ][ 7 ]->isFirstMoveDone() )
+							board.move( 7, 7, 5, 7 );
+				}
 			}
 				break;
 
 			case Figure::Black :
 			{
 				if( x == 1 )
-					board.move( 0, 0, 2, 0 );
+				{
+					if( board.figures()[ 0 ][ 0 ] &&
+						!board.figures()[ 0 ][ 0 ]->isFirstMoveDone() )
+							board.move( 0, 0, 2, 0 );
+				}
 				else if( x == 6 )
-					board.move( 7, 0, 5, 0 );
+				{
+					if( board.figures()[ 7 ][ 0 ] &&
+						!board.figures()[ 7 ][ 0 ]->isFirstMoveDone() )
+							board.move( 7, 0, 5, 0 );
+				}
 			}
 				break;
 
