@@ -16,5 +16,12 @@
         <file>img/queen-black.png</file>
         <file>img/queen-white.png</file>
         <file>img/empty.png</file>
+        <file>img/icon16x16.png</file>
+        <file>img/icon22x22.png</file>
+        <file>img/icon32x32.png</file>
+        <file>img/icon48x48.png</file>
+        <file>img/icon64x64.png</file>
+        <file>img/icon128x128.png</file>
+        <file>img/icon256x256.png</file>
     </qresource>
 </RCC>
