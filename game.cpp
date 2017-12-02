@@ -607,12 +607,6 @@ Game::isCheckAfterMove( int x, int y, Figure * figure, Board & tmpBoard ) const
 			{
 				Figure * tmpFigure = tmpBoard.figures()[ y ][ x ];
 
-				if(tmpFigure->type() == Figure::BishopFigure)
-				{
-					int z = 0;
-					z++;
-				}
-
 				// For each possible move.
 				for( int i = 0; i < 5; ++i )
 				{
@@ -729,15 +723,21 @@ Game::isCheckMate()
 
 						if( d == Move::Any || d == Move::TwoFirstTime )
 						{
+							bool stop = false;
+
 							while( x >= 0 && x < 8 && y >= 0 && y < 8 )
 							{
 								++move;
 
-								if( tmpBoard.figures()[ y ][ x ] &&
-									( !tmpFigure->moves()[ i ][ j ]
-										.types().testFlag( Move::Hit ) ||
-									tmpBoard.figures()[ y ][ x ]->color() == m_turnColor ) )
+								if( tmpBoard.figures()[ y ][ x ] )
+								{
+									if( tmpBoard.figures()[ y ][ x ]->color() == m_turnColor )
 										break;
+									else if( !tmpFigure->moves()[ i ][ j ].types().testFlag( Move::Hit ) )
+										break;
+									else
+										stop = true;
+								}
 
 								const bool firstMoveDone =
 									tmpFigure->isFirstMoveDone();
@@ -753,6 +753,9 @@ Game::isCheckMate()
 										break;
 								}
 
+								if( stop )
+									break;
+
 								x += dx;
 								y += dy;
 							}
@@ -760,11 +763,13 @@ Game::isCheckMate()
 						else if( tmpFigure->moves()[ i ][ j ].dist() != Move::No &&
 							x >= 0 && x < 8 && y >= 0 && y < 8 )
 						{
-							if( tmpBoard.figures()[ y ][ x ] &&
-								( !tmpFigure->moves()[ i ][ j ]
-									.types().testFlag( Move::Hit ) ||
-								tmpBoard.figures()[ y ][ x ]->color() == m_turnColor ) )
+							if( tmpBoard.figures()[ y ][ x ] )
+							{
+								if( tmpBoard.figures()[ y ][ x ]->color() == m_turnColor )
 									continue;
+								else if( !tmpFigure->moves()[ i ][ j ].types().testFlag( Move::Hit ) )
+									continue;
+							}
 
 							if( !isCheckAfterMove( x, y, tmpFigure, tmpBoard ) )
 								return false;
@@ -854,10 +859,12 @@ Game::handleTransformation()
 			case Figure::Black :
 			{
 				if( m_selected->y() == 7 )
+				{
 					emit m_signals.pawnTransformation( Signals::Black,
 						m_selected->x(), m_selected->y() );
 
-				return true;
+					return true;
+				}
 			}
 				break;
 

@@ -50,7 +50,8 @@ Board::~Board()
 }
 
 Board::Board( const Board & other )
-	:	m_figures( std::move( initFigures() ) )
+	:	QAbstractListModel( Q_NULLPTR )
+	,	m_figures( std::move( initFigures() ) )
 	,	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
 	,	m_blackKing( static_cast< King* > ( m_figures.at( 4 ).data() ) )
 {
