@@ -61,106 +61,27 @@ ApplicationWindow {
         }
     }
 
-    Dialog {
+    CheckMateDialog {
         id: checkmate
-        title: qsTr( "Checkmate..." )
-        standardButtons: Dialog.Ok
-        modal: true
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-        x: appWindow.width / 2 - width / 2
-        y: appWindow.height / 2 - height / 2
 
-        Text {
-            anchors.centerIn: parent
-            font.pixelSize: 30
-            font.bold: true
-            text: ( turn.text === qsTr( "Black" ) ?
-                qsTr( "White" ) : qsTr( "Black" ) ) + qsTr( " won!!!" )
-        }
+        appWindowSize: Qt.size( appWindow.width, appWindow.height )
+        turnText: turn.text
 
         onClosed: { board.newGame() }
     }
 
-    Dialog {
+    DrawGameDialog {
         id: drawgame
-        title: qsTr( "Draw Game..." )
-        standardButtons: Dialog.Ok
-        modal: true
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-        x: appWindow.width / 2 - width / 2
-        y: appWindow.height / 2 - height / 2
 
-        Text {
-            anchors.centerIn: parent
-            font.pixelSize: 30
-            font.bold: true
-            text: qsTr( "Draw Game!!!" )
-        }
+        appWindowSize: Qt.size( appWindow.width, appWindow.height )
 
         onClosed: { board.newGame() }
     }
 
-    Dialog {
+    TransformDialog {
         id: transform
-        title: qsTr( "Choose figure..." )
-        standardButtons: Dialog.Ok
-        modal: true
-        focus: true
-        closePolicy: Popup.CloseOnEscape
-        x: appWindow.width / 2 - width / 2
-        y: appWindow.height / 2 - height / 2
 
-        property int color: Chess.White
-        property int fx: -1
-        property int fy: -1
-        property int figure: Chess.Queen
-
-        contentItem: Rectangle {
-            ButtonGroup {
-                buttons: column.children
-            }
-
-            Column {
-                id: column
-
-                property alias figure: transform.figure
-
-                RadioButton {
-                    checked: true
-                    text: qsTr( "Queen" )
-
-                    onClicked: {
-                        column.figure = Chess.Queen
-                    }
-                }
-
-                RadioButton {
-                    text: qsTr( "Castle" )
-
-                    onClicked: {
-                        column.figure = Chess.Castle
-                    }
-                }
-
-                RadioButton {
-                    text: qsTr( "Knight" )
-
-                    onClicked: {
-                        column.figure = Chess.Knight
-                    }
-                }
-
-                RadioButton {
-                    text: qsTr( "Bishop" )
-
-                    onClicked: {
-                        column.figure = Chess.Bishop
-                    }
-                }
-            }
-        }
+        appWindowSize: Qt.size( appWindow.width, appWindow.height )
 
         onClosed: { board.transformation( figure, color, fx, fy ) }
     }

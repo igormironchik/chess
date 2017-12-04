@@ -63,7 +63,7 @@ class Game Q_DECL_FINAL
 
 public:
 	Game( QObject * root, Board & board, Signals & s );
-	~Game();
+	virtual ~Game();
 
 private slots:
 	//! Clicked.

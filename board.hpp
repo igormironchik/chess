@@ -47,7 +47,7 @@ class Board Q_DECL_FINAL
 
 public:
 	Board();
-	~Board();
+	virtual ~Board();
 
 	Board( const Board & other );
 	Board & operator = ( const Board & other );

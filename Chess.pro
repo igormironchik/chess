@@ -23,3 +23,8 @@ HEADERS =	figures.hpp \
 			signals.hpp
 
 RESOURCES = resources.qrc
+
+DISTFILES += \
+    TransformDialog.qml \
+    DrawGameDialog.qml \
+    CheckMateDialog.qml

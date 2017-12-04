@@ -23,5 +23,8 @@
         <file>img/icon64x64.png</file>
         <file>img/icon128x128.png</file>
         <file>img/icon256x256.png</file>
+        <file>TransformDialog.qml</file>
+        <file>DrawGameDialog.qml</file>
+        <file>CheckMateDialog.qml</file>
     </qresource>
 </RCC>

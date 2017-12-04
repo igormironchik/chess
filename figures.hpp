@@ -163,13 +163,13 @@ class Pawn Q_DECL_FINAL
 {
 public:
 	Pawn( int xv, int yv, Color c, const QString & n, int index );
-	~Pawn();
+	virtual ~Pawn();
 
 	//! \return Possible moves.
-	const Moves & moves() const;
+	const Moves & moves() const Q_DECL_OVERRIDE;
 
 	//! \return Type of figure.
-	FigureType type() const;
+	FigureType type() const Q_DECL_OVERRIDE;
 
 	//! Is pass?
 	bool isPass() const;
@@ -196,13 +196,13 @@ class Castle Q_DECL_FINAL
 {
 public:
 	Castle( int xv, int yv, Color c, const QString & n, int index );
-	~Castle();
+	virtual ~Castle();
 
 	//! \return Possible moves.
-	const Moves & moves() const;
+	const Moves & moves() const Q_DECL_OVERRIDE;
 
 	//! \return Type of figure.
-	FigureType type() const;
+	FigureType type() const Q_DECL_OVERRIDE;
 
 	//! Copy.
 	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
@@ -222,13 +222,13 @@ class Knight Q_DECL_FINAL
 {
 public:
 	Knight( int xv, int yv, Color c, const QString & n, int index );
-	~Knight();
+	virtual ~Knight();
 
 	//! \return Possible moves.
-	const Moves & moves() const;
+	const Moves & moves() const Q_DECL_OVERRIDE;
 
 	//! \return Type of figure.
-	FigureType type() const;
+	FigureType type() const Q_DECL_OVERRIDE;
 
 	//! Copy.
 	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
@@ -248,13 +248,13 @@ class Bishop Q_DECL_FINAL
 {
 public:
 	Bishop( int xv, int yv, Color c, const QString & n, int index );
-	~Bishop();
+	virtual ~Bishop();
 
 	//! \return Possible moves.
-	const Moves & moves() const;
+	const Moves & moves() const Q_DECL_OVERRIDE;
 
 	//! \return Type of figure.
-	FigureType type() const;
+	FigureType type() const Q_DECL_OVERRIDE;
 
 	//! Copy.
 	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
@@ -274,13 +274,13 @@ class Queen Q_DECL_FINAL
 {
 public:
 	Queen( int xv, int yv, Color c, const QString & n, int index );
-	~Queen();
+	virtual ~Queen();
 
 	//! \return Possible moves.
-	const Moves & moves() const;
+	const Moves & moves() const Q_DECL_OVERRIDE;
 
 	//! \return Type of figure.
-	FigureType type() const;
+	FigureType type() const Q_DECL_OVERRIDE;
 
 	//! Copy.
 	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;
@@ -300,13 +300,13 @@ class King Q_DECL_FINAL
 {
 public:
 	King( int xv, int yv, Color c, const QString & n, int index );
-	~King();
+	virtual ~King();
 
 	//! \return Possible moves.
-	const Moves & moves() const;
+	const Moves & moves() const Q_DECL_OVERRIDE;
 
 	//! \return Type of figure.
-	FigureType type() const;
+	FigureType type() const Q_DECL_OVERRIDE;
 
 	//! Copy.
 	QSharedPointer< Figure > copy() const Q_DECL_OVERRIDE;

@@ -74,7 +74,7 @@ public:
 	{
 	}
 
-	~Signals()
+	virtual ~Signals()
 	{
 	}
 }; // class Signals
