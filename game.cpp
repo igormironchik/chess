@@ -271,9 +271,12 @@ Game::firstClick( int x, int y )
 							m_board.figures()[ y ][ x - 4 ] &&
 							!m_board.figures()[ y ][ x - 4 ]->isFirstMoveDone() )
 						{
-							m_possibleMoves.append( ( x - 3 ) * 10 + y );
+							if( !isCheckAfterMove( x - 3, y, figure, tmpBoard ) )
+							{
+								m_possibleMoves.append( ( x - 3 ) * 10 + y );
 
-							m_board.markBlue( x - 3, y );
+								m_board.markBlue( x - 3, y );
+							}
 						}
 
 						if( !m_board.figures()[ y ][ x + 1 ] &&
@@ -281,9 +284,12 @@ Game::firstClick( int x, int y )
 							m_board.figures()[ y ][ x + 3 ] &&
 							!m_board.figures()[ y ][ x + 3 ]->isFirstMoveDone() )
 						{
-							m_possibleMoves.append( ( x + 2 ) * 10 + y );
+							if( !isCheckAfterMove( x + 2, y, figure, tmpBoard ) )
+							{
+								m_possibleMoves.append( ( x + 2 ) * 10 + y );
 
-							m_board.markBlue( x + 2, y );
+								m_board.markBlue( x + 2, y );
+							}
 						}
 					}
 
