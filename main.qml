@@ -43,7 +43,8 @@ ApplicationWindow {
             id: board
             width: Math.max( Math.min( parent.width, parent.height - offset ), minSize )
             height: Math.max( Math.min( parent.width, parent.height - offset ), minSize )
-            anchors.horizontalCenter: rect.horizontalCenter
+            x: Math.abs( rect.width - width ) / 2
+            y: Math.abs( rect.height - height - turn.height ) / 2
 
             objectName: "board"
         }
