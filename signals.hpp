@@ -68,6 +68,10 @@ signals:
 	void pawnTransformation( int color, int fx, int fy );
 	//! Rotate board.
 	void rotate( int angle );
+	//! Turn made.
+	void turnMade();
+	//! No more undo.
+	void noMoreUndo();
 
 public:
 	Signals()

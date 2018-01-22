@@ -26,6 +26,7 @@
 // Qt include.
 #include <QObject>
 #include <QVector>
+#include <QStack>
 
 // Chess include.
 #include "board.hpp"
@@ -74,6 +75,10 @@ private slots:
 	void newGame();
 	//! Transformation.
 	void transformation( int figure, int c, int x, int y );
+	//! Turn ended.
+	void turnEnded();
+	//! Undo.
+	void undo();
 
 private:
 	//! Mark cells for move.
@@ -110,6 +115,8 @@ private:
 private:
 	//! Board.
 	Board & m_board;
+    //! Previous boards.
+    QStack< Board > m_turns;
 	//! Root object in QML.
 	QObject * m_root;
 	//! Board object in QML.

@@ -27,7 +27,8 @@ RESOURCES = resources.qrc
 DISTFILES += \
     TransformDialog.qml \
     DrawGameDialog.qml \
-    CheckMateDialog.qml
+    CheckMateDialog.qml \
+    UndoBtn.qml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

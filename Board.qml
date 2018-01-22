@@ -63,6 +63,7 @@ Rectangle {
     signal hovered( int x, int y )
     signal newGame()
     signal transformation( int figure, int color, int x, int y );
+    signal undo()
 
     Row {
         id: top

@@ -61,6 +61,8 @@ Game::Game( QObject * root, Board & board, Signals & s )
 	,	m_signals( s )
 	,	m_checkmate( false )
 {
+    m_turns.append( board );
+
 	m_boardObject = m_root->findChild< QObject* > ( QLatin1String( "board" ) );
 
 	if( !m_boardObject )
@@ -68,12 +70,14 @@ Game::Game( QObject * root, Board & board, Signals & s )
 
 	connect( m_boardObject, SIGNAL( clicked( int, int ) ),
 		this, SLOT( clicked( int, int ) ) );
+	connect( m_boardObject, SIGNAL( undo() ), this, SLOT( undo() ) );
 	connect( m_boardObject, SIGNAL( hovered( int, int ) ),
 		this, SLOT( hovered( int, int ) ) );
 	connect( m_boardObject, SIGNAL( newGame() ),
 		this, SLOT( newGame() ) );
 	connect( m_boardObject, SIGNAL( transformation( int, int, int, int ) ),
 		this, SLOT( transformation( int, int, int, int ) ) );
+	connect( &m_signals, &Signals::turnMade, this, &Game::turnEnded );
 }
 
 Game::~Game()
@@ -324,6 +328,8 @@ Game::secondClick( int x, int y )
 
 		markTurnLabel();
 
+		bool turn = false;
+
 		if( !handleTransformation() )
 		{
 			if( checkCheck() && isCheckMate() )
@@ -338,6 +344,8 @@ Game::secondClick( int x, int y )
 			}
 			else
 				emit m_signals.rotate( -1 );
+
+			turn = true;
 		}
 		else
 			emit m_signals.rotate( -1 );
@@ -380,6 +388,9 @@ Game::secondClick( int x, int y )
 		}
 
 		m_selected = 0;
+
+		if( turn )
+			emit m_signals.turnMade();
 
 		return true;
 	}
@@ -897,6 +908,32 @@ Game::transformation( int figure, int c, int x, int y )
 
 		emit m_signals.checkmate();
 	}
+    else
+		emit m_signals.turnMade();
+}
+
+void
+Game::turnEnded()
+{
+	m_turns.append( m_board );
+}
+
+void
+Game::undo()
+{
+	if( m_turns.size() > 1 )
+	{
+		m_turns.pop();
+		m_board = m_turns.top();
+		m_board.update();
+		markTurnLabel();
+		emit m_signals.rotate( -1 );
+
+		if( m_turns.size() == 1 )
+			emit m_signals.noMoreUndo();
+	}
+	else
+		emit m_signals.noMoreUndo();
 }
 
 void
@@ -911,6 +948,10 @@ Game::newGame()
 {
 	m_board.newGame();
 	m_board.update();
+	m_turns.clear();
+	m_turns.append( m_board );
+
+	emit m_signals.noMoreUndo();
 
 	m_turnColor = Figure::White;
 	m_isChess = false;

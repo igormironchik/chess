@@ -21,7 +21,7 @@
 */
 
 import QtQuick.Window 2.2
-import QtQuick 2.0
+import QtQuick 2.7
 import QtQuick.Controls 2.2
 import ChessSignals 1.0
 
@@ -33,18 +33,28 @@ ApplicationWindow {
     property int minSize: offset * 2 + 50 * 8
 
     width: minSize
-    height: minSize + offset
+    height: minSize + offset + 64
 
     Rectangle {
         id: rect
         anchors.fill: parent
 
+        UndoBtn {
+            id: undoBtn
+            width: Math.min( Math.min( appWindow.width, appWindow.height ) / 10, 64 )
+            height: width
+            x: appWindow.width - width - 10
+            y: 10
+        }
+
         Board {
             id: board
-            width: Math.max( Math.min( parent.width, parent.height - offset ), minSize )
-            height: Math.max( Math.min( parent.width, parent.height - offset ), minSize )
+            width: Math.min( parent.width,
+                parent.height - offset - undoBtn.height - 10 - turn.height )
+            height: Math.min( parent.width,
+                parent.height - offset - undoBtn.height - 10 - turn.height )
             x: Math.abs( rect.width - width ) / 2
-            y: Math.abs( rect.height - height - turn.height ) / 2
+            y: Math.abs( rect.height - height - turn.height - undoBtn.height - 10 ) / 2 + undoBtn.height + 10
 
             objectName: "board"
         }
@@ -104,6 +114,14 @@ ApplicationWindow {
             transform.fy = fy
 
             transform.open()
+        }
+
+        onNoMoreUndo: {
+            undoBtn.disable()
+        }
+
+        onTurnMade: {
+            undoBtn.enable()
         }
     }
 }

@@ -26,5 +26,9 @@
         <file>TransformDialog.qml</file>
         <file>DrawGameDialog.qml</file>
         <file>CheckMateDialog.qml</file>
+        <file>img/undo.png</file>
+        <file>img/undo_disabled.png</file>
+        <file>img/undo_clicked.png</file>
+        <file>UndoBtn.qml</file>
     </qresource>
 </RCC>
