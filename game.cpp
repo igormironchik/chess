@@ -706,7 +706,7 @@ Game::isCheckMate()
 	for( int x = 0; x < 8; ++x )
 	{
 		for( int y = 0; y < 8; ++y )
-		{
+		{		
 			if( tmpBoard.figures()[ y ][ x ] &&
 				tmpBoard.figures()[ y ][ x ]->color() == m_turnColor )
 			{
@@ -787,6 +787,9 @@ Game::isCheckMate()
 								else if( !tmpFigure->moves()[ i ][ j ].types().testFlag( Move::Hit ) )
 									continue;
 							}
+							else if( tmpFigure->moves()[ i ][ j ].types().testFlag( Move::Hit ) &&
+								!tmpFigure->moves()[ i ][ j ].types().testFlag( Move::Movement ) )
+									continue;
 
 							if( !isCheckAfterMove( x, y, tmpFigure, tmpBoard ) )
 								return false;
