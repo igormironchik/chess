@@ -65,6 +65,11 @@ public:
 	typedef Figure* FiguresOnBoard[ 8 ][ 8 ];
 
 	//! \return Figures on board.
+	//! \note Returned type is two-dimensinal array and indexes are
+	//! as in usual C array. I.e. Left white castle has indexes [ 7 ][ 0 ],
+	//! whereas all positions in methods are in logical coordinates where
+	//! top-left position is ( 0, 0 ), i.e. left white castle will has
+	//! position ( 0, 7 ).
 	FiguresOnBoard & figures();
 
 	//! \return Figure by index in the array.
