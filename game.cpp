@@ -28,6 +28,8 @@
 #include <QString>
 #include <QMetaObject>
 
+#include <QDebug>
+
 
 namespace Chess {
 
@@ -449,8 +451,8 @@ Game::handleCastling( int x, int y,
 			{
 				if( x == 1 )
 				{
-					if( board.figures()[ 0 ][ 7 ] &&
-						!board.figures()[ 0 ][ 7 ]->isFirstMoveDone() )
+					if( board.figures()[ 7 ][ 0 ] &&
+						!board.figures()[ 7 ][ 0 ]->isFirstMoveDone() )
 							board.move( 0, 7, 2, 7 );
 				}
 				else if( x == 6 )
@@ -472,8 +474,8 @@ Game::handleCastling( int x, int y,
 				}
 				else if( x == 6 )
 				{
-					if( board.figures()[ 7 ][ 0 ] &&
-						!board.figures()[ 7 ][ 0 ]->isFirstMoveDone() )
+					if( board.figures()[ 0 ][ 7 ] &&
+						!board.figures()[ 0 ][ 7 ]->isFirstMoveDone() )
 							board.move( 7, 0, 5, 0 );
 				}
 			}
