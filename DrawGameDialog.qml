@@ -6,17 +6,34 @@ Dialog {
     property size appWindowSize;
 
     title: qsTr( "Draw Game..." )
-    standardButtons: Dialog.Ok
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     x: appWindowSize.width / 2 - width / 2
     y: appWindowSize.height / 2 - height / 2
 
-    Text {
+    Column {
         anchors.centerIn: parent
-        font.pixelSize: 30
-        font.bold: true
-        text: qsTr( "Draw Game!!!" )
+        id: column
+
+        Text {
+            font.pixelSize: 30
+            font.bold: true
+            text: qsTr( "Draw Game!!!" )
+        }
+
+        Rectangle {
+            height: 25
+            width: column.width
+        }
+
+        Button {
+            text: qsTr( "OK" )
+            anchors.right: column.right
+
+            onClicked: {
+                close()
+            }
+        }
     }
 }
