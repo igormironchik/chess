@@ -64,6 +64,8 @@ int main( int argc, char ** argv )
 	try {
 		Chess::Game game( engine.rootObjects().first(), board, sigs );
 
+		engine.rootContext()->setContextProperty( "gameImpl", &game );
+
 		return app.exec();
 	}
 	catch( const Chess::Error & )

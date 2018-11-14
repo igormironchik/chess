@@ -86,6 +86,12 @@ Game::~Game()
 {
 }
 
+int
+Game::turnsCount() const
+{
+	return m_turns.size();
+}
+
 void
 Game::markCellsForMove( int x, int y, int dx, int dy, Move::Distance d,
 	Figure * figure, Board & tmpBoard )

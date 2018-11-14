@@ -119,9 +119,5 @@ ApplicationWindow {
         onNoMoreUndo: {
             undoBtn.disable()
         }
-
-        onTurnMade: {
-            undoBtn.enable()
-        }
     }
 }

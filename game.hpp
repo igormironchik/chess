@@ -66,6 +66,8 @@ public:
 	Game( QObject * root, Board & board, Signals & s );
 	virtual ~Game();
 
+	Q_INVOKABLE int turnsCount() const;
+
 private slots:
 	//! Clicked.
 	void clicked( int x, int y );

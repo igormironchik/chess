@@ -41,6 +41,20 @@ Image {
 
         onClicked: {
             board.undo()
+            disable()
+        }
+    }
+
+    Connections {
+        target: board
+
+        onRotationStarted: {
+            disable()
+        }
+
+        onRotationDone: {
+            if( gameImpl.turnsCount() > 1 )
+                enable()
         }
     }
 
