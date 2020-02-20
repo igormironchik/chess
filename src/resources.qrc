@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>Board.qml</file>
-        <file>Cell.qml</file>
-        <file>main.qml</file>
+        <file>qml/Board.qml</file>
+        <file>qml/Cell.qml</file>
+        <file>qml/main.qml</file>
         <file>img/bishop-black.png</file>
         <file>img/bishop-white.png</file>
         <file>img/castle-black.png</file>
@@ -23,12 +23,12 @@
         <file>img/icon64x64.png</file>
         <file>img/icon128x128.png</file>
         <file>img/icon256x256.png</file>
-        <file>TransformDialog.qml</file>
-        <file>DrawGameDialog.qml</file>
-        <file>CheckMateDialog.qml</file>
+        <file>qml/TransformDialog.qml</file>
+        <file>qml/DrawGameDialog.qml</file>
+        <file>qml/CheckMateDialog.qml</file>
         <file>img/undo.png</file>
         <file>img/undo_disabled.png</file>
         <file>img/undo_clicked.png</file>
-        <file>UndoBtn.qml</file>
+        <file>qml/UndoBtn.qml</file>
     </qresource>
 </RCC>

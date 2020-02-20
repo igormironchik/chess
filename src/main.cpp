@@ -56,7 +56,7 @@ int main( int argc, char ** argv )
 	engine.rootContext()->setContextProperty( "chessBoard", &board );
 	engine.rootContext()->setContextProperty( "game", &sigs );
 
-	engine.load( QUrl( "qrc:/main.qml" ) );
+	engine.load( QUrl( "qrc:/qml/main.qml" ) );
 
 	if( engine.rootObjects().isEmpty() )
 		return -1;
