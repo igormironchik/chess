@@ -38,7 +38,7 @@ namespace Chess {
 //
 
 Board::Board()
-	:	m_figures( std::move( initFigures() ) )
+	:	m_figures( initFigures() )
 	,	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
 	,	m_blackKing( static_cast< King* > ( m_figures.at( 4 ).data() ) )
 {
@@ -51,7 +51,7 @@ Board::~Board()
 
 Board::Board( const Board & other )
 	:	QAbstractListModel( Q_NULLPTR )
-	,	m_figures( std::move( initFigures() ) )
+	,	m_figures( initFigures() )
 	,	m_whiteKing( static_cast< King* > ( m_figures.at( 20 ).data() ) )
 	,	m_blackKing( static_cast< King* > ( m_figures.at( 4 ).data() ) )
 {
@@ -63,7 +63,7 @@ Board::operator = ( const Board & other )
 {
 	if( this != &other )
 	{
-		m_figures = std::move( initFigures() );
+		m_figures = initFigures();
 		m_whiteKing = static_cast< King* > ( m_figures.at( 20 ).data() );
 		m_blackKing = static_cast< King* > ( m_figures.at( 4 ).data() );
 
