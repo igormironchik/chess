@@ -110,10 +110,10 @@ Board::copyState( const Board & other )
 	}
 }
 
-QList< QSharedPointer< Figure > >
+QVector< QSharedPointer< Figure > >
 Board::initFigures() const
 {
-	QList< QSharedPointer< Figure > > res = {
+	QVector< QSharedPointer< Figure > > res = {
 		QSharedPointer< Figure >{ new Castle{ 0, 0, Figure::Black,
 			QLatin1String( "castle-black-1" ), 0 } },
 		QSharedPointer< Figure >{ new Knight{ 1, 0, Figure::Black,

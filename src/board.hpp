@@ -28,7 +28,7 @@
 #include "signals.hpp"
 
 // Qt include.
-#include <QList>
+#include <QVector>
 #include <QSharedPointer>
 #include <QAbstractListModel>
 
@@ -109,7 +109,7 @@ public slots:
 
 private:
 	//! Init figures.
-	QList< QSharedPointer< Figure > > initFigures() const;
+	QVector< QSharedPointer< Figure > > initFigures() const;
 	//! Copy state of the board.
 	void copyState( const Board & other );
 
@@ -117,9 +117,9 @@ private:
 	//! Board.
 	FiguresOnBoard m_board;
 	//! Figures.
-	QList< QSharedPointer< Figure > > m_figures;
+	QVector< QSharedPointer< Figure > > m_figures;
 	//! Transformed figures.
-	QList< QSharedPointer< Figure > > m_transformed;
+	QVector< QSharedPointer< Figure > > m_transformed;
 	//! White king.
 	King * m_whiteKing;
 	//! Black king.
