@@ -21,6 +21,12 @@ HEADERS =	figures.hpp \
 RESOURCES = resources.qrc
 
 DISTFILES += qml/Board.qml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
     qml/Cell.qml \
 	qml/main.qml \
     qml/TransformDialog.qml \
@@ -31,3 +37,5 @@ DISTFILES += qml/Board.qml \
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 OTHER_FILES += android/AndroidManifest.xml
+
+ANDROID_ABIS = armeabi-v7a x86_64
