@@ -1,6 +1,6 @@
 
 TEMPLATE = app
-TARGET = chess
+TARGET = Chess
 QT += qml
 CONFIG += c++14
 
@@ -12,7 +12,7 @@ SOURCES =	main.cpp \
 			figures.cpp \
 			board.cpp \
 			game.cpp
-			
+
 HEADERS =	figures.hpp \
 			board.hpp \
 			game.hpp \
