@@ -283,11 +283,12 @@ Game::firstClick( int x, int y )
 							m_board.figures()[ y ][ x - 4 ] &&
 							!m_board.figures()[ y ][ x - 4 ]->isFirstMoveDone() )
 						{
-							if( !isCheckAfterMove( x - 3, y, figure, tmpBoard ) )
+							if( !isCheckAfterMove( x - 2, y, figure, tmpBoard ) &&
+								!isCheckAfterMove( x - 1, y, figure, tmpBoard ) )
 							{
-								m_possibleMoves.append( ( x - 3 ) * 10 + y );
+								m_possibleMoves.append( ( x - 2 ) * 10 + y );
 
-								m_board.markBlue( x - 3, y );
+								m_board.markBlue( x - 2, y );
 							}
 						}
 
@@ -296,7 +297,8 @@ Game::firstClick( int x, int y )
 							m_board.figures()[ y ][ x + 3 ] &&
 							!m_board.figures()[ y ][ x + 3 ]->isFirstMoveDone() )
 						{
-							if( !isCheckAfterMove( x + 2, y, figure, tmpBoard ) )
+							if( !isCheckAfterMove( x + 2, y, figure, tmpBoard ) &&
+								!isCheckAfterMove( x + 1, y, figure, tmpBoard ) )
 							{
 								m_possibleMoves.append( ( x + 2 ) * 10 + y );
 
@@ -455,11 +457,11 @@ Game::handleCastling( int x, int y,
 		{
 			case Figure::White :
 			{
-				if( x == 1 )
+				if( x == 2 )
 				{
 					if( board.figures()[ 7 ][ 0 ] &&
 						!board.figures()[ 7 ][ 0 ]->isFirstMoveDone() )
-							board.move( 0, 7, 2, 7 );
+							board.move( 0, 7, 3, 7 );
 				}
 				else if( x == 6 )
 				{
@@ -472,11 +474,11 @@ Game::handleCastling( int x, int y,
 
 			case Figure::Black :
 			{
-				if( x == 1 )
+				if( x == 2 )
 				{
 					if( board.figures()[ 0 ][ 0 ] &&
 						!board.figures()[ 0 ][ 0 ]->isFirstMoveDone() )
-							board.move( 0, 0, 2, 0 );
+							board.move( 0, 0, 3, 0 );
 				}
 				else if( x == 6 )
 				{
@@ -714,7 +716,7 @@ Game::isCheckMate()
 	for( int x = 0; x < 8; ++x )
 	{
 		for( int y = 0; y < 8; ++y )
-		{		
+		{
 			if( tmpBoard.figures()[ y ][ x ] &&
 				tmpBoard.figures()[ y ][ x ]->color() == m_turnColor )
 			{
