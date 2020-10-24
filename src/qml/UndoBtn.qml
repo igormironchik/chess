@@ -40,8 +40,11 @@ Image {
         }
 
         onClicked: {
-            board.undo()
-            disable()
+			if( undoBtn.enabled )
+			{
+				board.undo()
+				disable()
+			}
         }
     }
 
