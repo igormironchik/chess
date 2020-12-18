@@ -21,9 +21,10 @@
 */
 
 import QtQuick 2.7
+import QtQuick.Window 2.15
 
 Rectangle {
-    property int offset: 16
+    property int offset: ( Screen.pixelDensity * 25.4 * 14 ) / 72 + 2
     property int cellWidth: ( width - offset * 2 ) / 8
     property int cellHeight: ( height - offset * 2 ) / 8
 
@@ -94,7 +95,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
-                font.pixelSize: 14
+                font.pointSize: 14
                 transform: Rotation {
                     origin.x: width / 2
                     origin.y: height / 2
@@ -119,7 +120,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
-                font.pixelSize: 14
+                font.pointSize: 14
                 transform: Rotation {
                     origin.x: width / 2
                     origin.y: height / 2
@@ -179,7 +180,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
-                font.pixelSize: 14
+                font.pointSize: 14
                 transform: Rotation {
                     origin.x: width / 2
                     origin.y: height / 2
@@ -205,7 +206,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
-                font.pixelSize: 14
+                font.pointSize: 14
                 transform: Rotation {
                     origin.x: width / 2
                     origin.y: height / 2

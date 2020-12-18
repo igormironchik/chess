@@ -66,7 +66,7 @@ ApplicationWindow {
             anchors.horizontalCenter: rect.horizontalCenter
             y: board.y + board.height
             font.bold: true
-            font.pixelSize: 14
+            font.pointSize: 14
 
             text: qsTr( "White" )
         }
