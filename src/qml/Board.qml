@@ -52,7 +52,7 @@ Rectangle {
     Connections {
         target: game
 
-        onRotate: {
+        function onRotate( angle ) {
             if( angle === -1 )
                 anim.start()
             else
@@ -63,11 +63,11 @@ Rectangle {
     Connections {
         target: anim
 
-        onStarted: {
+        function onStarted() {
             rotationStarted()
         }
 
-        onStopped: {
+        function onStopped() {
             rotationDone()
         }
     }

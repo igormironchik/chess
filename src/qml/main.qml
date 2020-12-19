@@ -100,15 +100,15 @@ ApplicationWindow {
     Connections {
         target: game
 
-        onCheckmate: {
+        function onCheckmate() {
             checkmate.open()
         }
 
-        onDrawgame: {
+        function onDrawgame() {
             drawgame.open()
         }
 
-        onPawnTransformation: {
+        function onPawnTransformation( color, fx, fy ) {
             transform.color = color
             transform.fx = fx
             transform.fy = fy
@@ -116,7 +116,7 @@ ApplicationWindow {
             transform.open()
         }
 
-        onNoMoreUndo: {
+        function onNoMoreUndo() {
             undoBtn.disable()
         }
     }

@@ -30,5 +30,6 @@
         <file>img/undo_disabled.png</file>
         <file>img/undo_clicked.png</file>
         <file>qml/UndoBtn.qml</file>
+        <file>qml/TransformRadioButton.qml</file>
     </qresource>
 </RCC>

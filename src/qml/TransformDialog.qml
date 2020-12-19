@@ -2,17 +2,21 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
 import ChessSignals 1.0
+import QtQuick.Window 2.15
 
 Dialog {
     id: transform
 
     property size appWindowSize;
+    property real radioSize: Screen.pixelDensity * 4
 
     title: qsTr( "Choose figure..." )
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape
-    x: appWindowSize.width / 2 - width / 2
+    width: appWindowSize.width
+    height: Math.max( appWindowSize.height / 2, column.height + implicitHeaderHeight + 10 )
+    x: 0
     y: appWindowSize.height / 2 - height / 2
 
     property int color: Chess.White
@@ -30,7 +34,7 @@ Dialog {
 
         property alias figure: transform.figure
 
-        RadioButton {
+        TransformRadioButton {
             checked: true
             text: qsTr( "Queen" )
 
@@ -39,7 +43,7 @@ Dialog {
             }
         }
 
-        RadioButton {
+        TransformRadioButton {
             text: qsTr( "Castle" )
 
             onClicked: {
@@ -47,7 +51,7 @@ Dialog {
             }
         }
 
-        RadioButton {
+        TransformRadioButton {
             text: qsTr( "Knight" )
 
             onClicked: {
@@ -55,7 +59,7 @@ Dialog {
             }
         }
 
-        RadioButton {
+        TransformRadioButton {
             text: qsTr( "Bishop" )
 
             onClicked: {
@@ -64,13 +68,15 @@ Dialog {
         }
 
         Rectangle {
-            height: 25
+            height: radioSize * 1.5
             width: column.width
         }
 
         Button {
             text: qsTr( "OK" )
             anchors.right: column.right
+            implicitHeight: radioSize * 2.5
+            implicitWidth: radioSize * 5
 
             onClicked: {
                 close()

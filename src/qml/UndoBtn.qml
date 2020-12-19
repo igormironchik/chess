@@ -51,11 +51,11 @@ Image {
     Connections {
         target: board
 
-        onRotationStarted: {
+        function onRotationStarted() {
             disable()
         }
 
-        onRotationDone: {
+        function onRotationDone() {
             if( gameImpl.turnsCount() > 1 )
                 enable()
         }

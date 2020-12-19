@@ -28,6 +28,7 @@ DISTFILES += qml/Board.qml \
     android/gradlew.bat \
     android/res/values/libs.xml \
     qml/Cell.qml \
+    qml/TransformRadioButton.qml \
 	qml/main.qml \
     qml/TransformDialog.qml \
     qml/DrawGameDialog.qml \
