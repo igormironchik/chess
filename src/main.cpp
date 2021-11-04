@@ -62,7 +62,7 @@ int main( int argc, char ** argv )
 		return -1;
 
 	try {
-		Chess::Game game( engine.rootObjects().first(), board, sigs );
+		Chess::Game game( engine.rootObjects().constFirst(), board, sigs );
 
 		engine.rootContext()->setContextProperty( "gameImpl", &game );
 

@@ -147,8 +147,7 @@ Rectangle {
                 border.color: model.BorderColor
                 chessX: index % 8
                 chessY: index / 8
-                onClicked: board.clicked( x, y )
-                //onHovered: board.hovered( x, y )
+                onClicked: ( x, y ) => { board.clicked( x, y ) }
                 objectName: "c"+ chessX + chessY
                 width: cellWidth
                 height: cellHeight
