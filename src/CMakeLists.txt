@@ -35,7 +35,8 @@ set( SRC main.cpp
     qml/TransformDialog.qml
     qml/DrawGameDialog.qml
     qml/CheckMateDialog.qml
-    qml/UndoBtn.qml )
+	qml/UndoBtn.qml
+	android/AndroidManifest.xml )
     
 if( WIN32 )
 	list( APPEND SRC chess.rc )
