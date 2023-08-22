@@ -1,6 +1,6 @@
 # About
 
-This is simple Chess Game implementation on QML.
+This is simple `Chess` game implemented with QML.
 
 # Screenshot
 
